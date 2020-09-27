@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->enum('type', ['CUSTOMER', 'MANAGEMENT'])->default('CUSTOMER');
             $table->dateTime('last_logged_in')->nullable();
             $table->decimal('balance', 20, 2)->default(0);

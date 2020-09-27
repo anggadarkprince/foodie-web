@@ -133,6 +133,37 @@ class PassportController extends Controller
     }
 
     /**
+     * Logout request to delete token.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $accessToken = auth()->user()->token();
+        
+        // revoke current access token
+        // $result = $accessToken->revoke();
+        
+        $this->revokeAccessAndRefreshTokens($currentToken->id);
+
+        return response()->json(["result" => true]);
+    }
+    
+    /**
+     * Revoke access and refresh token.
+     *
+     * @param String $tokenId
+     */
+    protected function revokeAccessAndRefreshTokens($tokenId) {
+        $tokenRepository = app('Laravel\Passport\TokenRepository');
+        $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');
+
+        $tokenRepository->revokeAccessToken($tokenId);
+        $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($tokenId);
+    }
+
+    /**
      * Returns authenticated user.
      *
      * @return JsonResponse

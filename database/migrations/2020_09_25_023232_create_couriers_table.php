@@ -19,7 +19,7 @@ class CreateCouriersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('id_card')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('address')->nullable();
