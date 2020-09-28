@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CuisineImage extends Model
 {
+    protected $visible = ['id', 'image', 'title'];
+
     /**
      * Get the cuisine of cuisine image.
      */

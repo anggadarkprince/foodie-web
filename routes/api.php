@@ -30,5 +30,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\PassportController@user')->name('api.user.profile');
     Route::post('logout', 'Api\PassportController@logout')->name('api.auth.logout');
 
-    //Route::resource('products', 'ProductController');
+    Route::get('user/orders', 'Api\UserController@orders')->name('api.user.orders');
+    Route::get('user/transactions', 'Api\UserController@transactions')->name('api.user.transactions');
 });

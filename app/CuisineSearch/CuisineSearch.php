@@ -4,6 +4,7 @@ namespace App\CuisineSearch;
 
 use App\Category;
 use App\Cuisine;
+use App\CuisineImage;
 use App\Restaurant;
 use App\Search\SearchableTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -66,6 +67,9 @@ class CuisineSearch
             $cuisine['restaurant'] = Restaurant::find($cuisine['restaurant_id'], [
                 'id', 'name', 'address', 'image', 'lat', 'lng', 'map_location'
             ]);
+            $cuisine['cuisine_images'] = CuisineImage::where('cuisine_id', $cuisine['id'])->select([
+                'image', 'title'
+            ])->get();
             $cuisine->makeHidden('category_id');
             $cuisine->makeHidden('restaurant_id');
             return $cuisine;
