@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
+/**
+ * Manage category data.
+ *
+ * Class CategoryController
+ * @package App\Http\Controllers\Api
+ */
 class CategoryController extends Controller
 {
     public function index()

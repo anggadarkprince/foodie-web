@@ -15,16 +15,6 @@ class CuisineSearch
     use SearchableTrait;
 
     /**
-     * Get decorator namespace.
-     *
-     * @return string
-     */
-    public function getDecoratorNamespace()
-    {
-        return 'App\\CuisineSearch\\Filters\\';
-    }
-
-    /**
      * Get base model.
      *
      * @param Request $filters

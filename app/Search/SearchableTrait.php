@@ -21,7 +21,7 @@ trait SearchableTrait
      *
      * @var string
      */
-    protected $decoratorNamespace;
+    protected $decoratorNamespace = self::class . '\\Filters\\';
 
     /**
      * Set base model.
@@ -54,7 +54,7 @@ trait SearchableTrait
      */
     public function getDecoratorNamespace()
     {
-        return $this->decoratorNamespace;
+        return substr(get_class(), 0, strrpos( get_class(), '\\')) . '\\Filters\\';
     }
 
     /**
