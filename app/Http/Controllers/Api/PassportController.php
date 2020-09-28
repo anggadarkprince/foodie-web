@@ -32,9 +32,11 @@ class PassportController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        $token = $user->createToken('Login')->accessToken;
+        //$token = $user->createToken('Login')->accessToken;
 
-        return response()->json(['token' => $token], 200);
+        //return response()->json(['token' => $token], 200);
+
+        return $this->login($request);
     }
 
     /**
@@ -123,7 +125,10 @@ class PassportController extends Controller
         }
         catch(ClientException $e) {
             if ($e->getResponse()->getStatusCode() === 401) {
-                return response()->json('Refresh token invalid or expired', 401);
+                return response()->json([
+                    'status' => 403,
+                    'message' => 'Refresh token invalid or expired'
+                ], 401);
             }
 
             throw $e;
@@ -141,21 +146,21 @@ class PassportController extends Controller
     public function logout(Request $request)
     {
         $accessToken = auth()->user()->token();
-        
+
         // revoke current access token
         // $result = $accessToken->revoke();
-        
-        $this->revokeAccessAndRefreshTokens($currentToken->id);
+
+        $this->revokeAccessAndRefreshTokens($accessToken->id);
 
         return response()->json(["result" => true]);
     }
-    
+
     /**
      * Revoke access and refresh token.
      *
      * @param String $tokenId
      */
-    protected function revokeAccessAndRefreshTokens($tokenId) {
+    protected function revokeAccessAndRefreshTokens(string $tokenId) {
         $tokenRepository = app('Laravel\Passport\TokenRepository');
         $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');
 
