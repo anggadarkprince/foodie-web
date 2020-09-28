@@ -24,6 +24,7 @@ Route::post('register', 'Api\PassportController@register')->name('api.auth.regis
 
 Route::get('categories', 'Api\CategoryController@index')->name('api.categories.index');
 Route::get('cuisines/discovery', 'Api\CuisineController@discovery')->name('api.cuisines.discovery');
+Route::get('cuisines/nearby', 'Api\CuisineController@nearby')->name('api.cuisines.nearby');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\PassportController@user')->name('api.user.profile');

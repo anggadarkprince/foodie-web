@@ -9,7 +9,18 @@ use Illuminate\Support\Str;
 
 trait SearchableTrait
 {
+    /**
+     * The base query builder instance.
+     *
+     * @var Builder
+     */
     protected $baseModel;
+
+    /**
+     * Decorator base namespace.
+     *
+     * @var string
+     */
     protected $decoratorNamespace;
 
     /**
@@ -18,7 +29,7 @@ trait SearchableTrait
      * @param $baseModel
      * @return $this
      */
-    public function withBaseModel($baseModel)
+    public function withBaseModel(Builder $baseModel)
     {
         $this->baseModel = $baseModel;
 
@@ -28,9 +39,10 @@ trait SearchableTrait
     /**
      * Get base model.
      *
-     * @return mixed
+     * @param Request $filters
+     * @return Builder
      */
-    public function getBaseModel()
+    public function getBaseModel(Request $filters)
     {
         return $this->baseModel;
     }
@@ -38,7 +50,7 @@ trait SearchableTrait
     /**
      * Get decorator namespace.
      *
-     * @return mixed
+     * @return string
      */
     public function getDecoratorNamespace()
     {
@@ -53,7 +65,7 @@ trait SearchableTrait
     public function apply(Request $filters, $baseModel = null)
     {
         return $this->getResult(
-            $this->applyDecoratorsFromRequest($filters, $baseModel ?: $this->getBaseModel())
+            $this->applyDecoratorsFromRequest($filters, $baseModel ?: $this->getBaseModel($filters))
         );
     }
 
@@ -67,13 +79,11 @@ trait SearchableTrait
     private function applyDecoratorsFromRequest(Request $request, Builder $query)
     {
         foreach ($request->all() as $filterName => $value) {
-
             $decorator = $this->createFilterDecorator($filterName);
 
             if ($this->isValidDecorator($decorator)) {
-                $query = $decorator::apply($query, $value);
+                $query = $decorator::apply($query, $value, $request);
             }
-
         }
         return $query;
     }

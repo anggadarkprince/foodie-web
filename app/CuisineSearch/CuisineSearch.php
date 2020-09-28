@@ -8,12 +8,17 @@ use App\Restaurant;
 use App\Search\SearchableTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class CuisineSearch
 {
     use SearchableTrait;
 
+    /**
+     * Get decorator namespace.
+     *
+     * @return string
+     */
     public function getDecoratorNamespace()
     {
         return 'App\\CuisineSearch\\Filters\\';
@@ -22,11 +27,12 @@ class CuisineSearch
     /**
      * Get base model.
      *
+     * @param Request $filters
      * @return mixed
      */
-    public function getBaseModel()
+    public function getBaseModel(Request $filters)
     {
-        return Cuisine::query()
+        $builder = Cuisine::query()
             ->select([
                 'cuisines.id',
                 'cuisines.cuisine',
@@ -39,6 +45,18 @@ class CuisineSearch
             ])
             ->join('categories', 'categories.id', '=', 'cuisines.category_id')
             ->join('restaurants', 'restaurants.id', '=', 'cuisines.restaurant_id');
+
+        if (!$filters->has('current_location')) {
+            $builder->selectRaw('null AS distance');
+        } else {
+            $fromLocation = explode(',', $filters->input('current_location'));
+            $builder->selectRaw('SQRT(
+                POW(69.1 * (lat - ?), 2) +
+                POW(69.1 * (? - lng) * COS(lat / 57.3), 2)
+            ) * 1609.34 AS distance', $fromLocation);
+        }
+
+        return $builder;
     }
 
     /**

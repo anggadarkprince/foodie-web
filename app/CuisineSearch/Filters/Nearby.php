@@ -1,15 +1,16 @@
 <?php
 
+
 namespace App\CuisineSearch\Filters;
 
 use App\Search\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class CategoryName implements Filter
+class Nearby implements Filter
 {
     /**
-     * Filter by category.
+     * Filter nearby restaurant in meters from current location.
      *
      * @param Builder $builder
      * @param mixed $value
@@ -18,6 +19,6 @@ class CategoryName implements Filter
      */
     public static function apply(Builder $builder, $value, Request $request)
     {
-        return $builder->where('categories.category', $value);
+        return $builder->having('distance', '<=', $value);
     }
 }

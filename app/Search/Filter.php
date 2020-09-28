@@ -3,6 +3,7 @@
 namespace App\Search;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 interface Filter
 {
@@ -11,7 +12,8 @@ interface Filter
      *
      * @param Builder $builder
      * @param mixed $value
+     * @param Request $request
      * @return Builder $builder
      */
-    public static function apply(Builder $builder, $value);
+    public static function apply(Builder $builder, $value, Request $request);
 }
