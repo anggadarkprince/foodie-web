@@ -122,8 +122,16 @@ class UserController extends Controller
      */
     public function transactions(Request $request)
     {
-        $transactions = $request->user()->transactions()->paginate(10);
+        $transactions = $request->user()->transactions()->orderBy('transactions.created_at', 'desc');
 
-        return response()->json($transactions);
+        if ($request->has('type')) {
+            $transactions->where('transactions.type', $request->get('type'));
+        }
+
+        if ($request->has('status')) {
+            $transactions->where('transactions.status', $request->get('status'));
+        }
+
+        return response()->json($transactions->paginate(10));
     }
 }
