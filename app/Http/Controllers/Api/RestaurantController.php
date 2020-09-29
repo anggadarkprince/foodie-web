@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\CuisineSearch\CuisineSearch;
 use App\Http\Controllers\Controller;
 use App\Restaurant;
 use App\RestaurantSearch\RestaurantSearch;
@@ -50,5 +49,23 @@ class RestaurantController extends Controller
         $restaurants->cuisines->makeHidden('restaurant_id');
 
         return response()->json($restaurants);
+    }
+
+    /**
+     * Get restaurant transactions.
+     *
+     * @param Request $request
+     * @param Restaurant $restaurant
+     * @return JsonResponse
+     */
+    public function orders(Request $request, Restaurant $restaurant)
+    {
+        $orders = $restaurant->orders()->orderBy('orders.created_at', 'desc');
+
+        if ($request->has('payment_type')) {
+            $orders->where('orders.payment_type', $request->get('payment_type'));
+        }
+
+        return response()->json($orders->paginate(10));
     }
 }

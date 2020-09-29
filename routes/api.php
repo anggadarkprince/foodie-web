@@ -29,6 +29,7 @@ Route::get('cuisines/{id}', 'Api\CuisineController@show')->name('api.cuisines.sh
 
 Route::get('restaurants/discovery', 'Api\RestaurantController@discovery')->name('api.restaurants.discovery');
 Route::get('restaurants/{id}', 'Api\RestaurantController@show')->name('api.restaurants.show');
+Route::get('restaurants/{restaurant}/orders', 'Api\RestaurantController@orders')->name('api.restaurants.order');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\PassportController@user')->name('api.user.account');
