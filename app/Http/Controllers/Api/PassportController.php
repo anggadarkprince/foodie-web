@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class PassportController extends Controller
 {
@@ -17,6 +18,7 @@ class PassportController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function register(Request $request)
     {
@@ -56,7 +58,7 @@ class PassportController extends Controller
             $token = auth()->user()->createToken('Login')->accessToken;
             return response()->json(['token' => $token], 200);
         } else {
-            return response()->json(['error' => 'UnAuthorised'], 401);
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 
@@ -92,7 +94,7 @@ class PassportController extends Controller
                 return response()->json('Invalid email/password combination', 401);
             }
 
-            throw $e;
+            return response()->json('Invalid credential', 401);
         }
 
         return response()->json($tokens);

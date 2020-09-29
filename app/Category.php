@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -16,7 +17,7 @@ class Category extends Model
      */
     public function getIconAttribute(string $value)
     {
-        return url('/') . $value;
+        return empty($value) ? $value : Storage::disk('public')->url($value);
     }
 
     /**

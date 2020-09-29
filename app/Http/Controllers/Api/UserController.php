@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateProfile;
 use App\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -55,6 +53,45 @@ class UserController extends Controller
                 $data['password'] = bcrypt($data['password']);
             }
             $user->update($data);
+
+            return response()->json($user);
+        } catch (QueryException $e) {
+            return response()->json([
+                'errors' => 'Something went wrong, try again or contact administrator'
+            ], 500);
+        }
+    }
+
+    /**
+     * Update user profile.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function updatePhoto(Request $request)
+    {
+        $this->validate($request, [
+            'avatar' => 'mimes:jpeg,jpg,png,gif|required|max:2000'
+        ]);
+
+        try {
+            $user = $request->user();
+
+            $file = $request->file('avatar');
+            $path = $file->storePubliclyAs(
+                'avatars/' . date('Ym'),
+                $user->id . '.' . $file->extension(),
+                'public'
+            );
+
+            if ($path === false) {
+                return response()->json([
+                    'errors' => 'Store file into storage failed'
+                ], 500);
+            }
+
+            $user->update(['avatar' => $path]);
 
             return response()->json($user);
         } catch (QueryException $e) {

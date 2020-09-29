@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Cuisine extends Model
 {
@@ -15,7 +16,7 @@ class Cuisine extends Model
      */
     public function getImageAttribute($value)
     {
-        return empty($value) ? $value : url('/') . $value;
+        return empty($value) ? $value : Storage::disk('public')->url($value);
     }
 
     /**

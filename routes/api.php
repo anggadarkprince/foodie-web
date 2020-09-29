@@ -33,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('user/profile', 'Api\UserController@profile')->name('api.user.profile');
     Route::post('user/profile', 'Api\UserController@updateProfile')->name('api.user.update');
+    Route::post('user/photo', 'Api\UserController@updatePhoto')->name('api.user.photo');
     Route::get('user/orders', 'Api\UserController@orders')->name('api.user.orders');
     Route::get('user/transactions', 'Api\UserController@transactions')->name('api.user.transactions');
 });
