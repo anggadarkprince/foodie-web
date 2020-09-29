@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -28,5 +29,32 @@ class Order extends Model
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    /**
+     * Scope a query to only include orders of a given status.
+     *
+     * @param Builder $query
+     * @param string|array $status
+     * @return Builder
+     */
+    public function scopeStatus(Builder $query, $status)
+    {
+        if (is_array($status)) {
+            return $query->whereIn('status', $status);
+        }
+
+        return $query->where('status', $status);
+    }
+
+    /**
+     * Scope a query to only include active orders.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query)
+    {
+        return $query->whereNotIn('status', ['COMPLETED', 'REJECTED', 'CANCELED']);
     }
 }

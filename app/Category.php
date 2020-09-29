@@ -9,7 +9,7 @@ class Category extends Model
     protected $visible = ['id', 'category', 'description', 'icon'];
 
     /**
-     * Get the user's first name.
+     * Get the category full path image.
      *
      * @param string $value
      * @return string

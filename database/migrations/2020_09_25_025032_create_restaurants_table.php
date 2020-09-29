@@ -21,7 +21,6 @@ class CreateRestaurantsTable extends Migration
             $table->string('image')->nullable();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
-            $table->point('map_location')->nullable();
             $table->decimal('restaurant_balance', 20, 2)->default(0);
             $table->timestamps();
 

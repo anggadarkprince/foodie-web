@@ -65,7 +65,7 @@ class CuisineSearch
                 'id', 'category', 'description', 'icon'
             ]);
             $cuisine['restaurant'] = Restaurant::find($cuisine['restaurant_id'], [
-                'id', 'name', 'address', 'image', 'lat', 'lng', 'map_location'
+                'id', 'name', 'address', 'image', 'lat', 'lng'
             ]);
             $cuisine['cuisine_images'] = CuisineImage::where('cuisine_id', $cuisine['id'])->select([
                 'image', 'title'

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cuisine;
 use App\CuisineSearch\CuisineSearch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -58,5 +59,29 @@ class CuisineController extends Controller
         $nearbyCuisineQuery = (new CuisineSearch)->apply($request);
 
         return response()->json($nearbyCuisineQuery);
+    }
+
+    /**
+     * Show single cuisine data in detail.
+     *
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function show(Request $request, $id)
+    {
+        $cuisine = Cuisine::with([
+            'cuisineImages' => function($query) {
+                return $query->select(['id', 'cuisine_id', 'image', 'title']);
+            },
+            'category' => function($query) {
+                return $query->select(['id', 'category', 'icon', 'description']);
+            },
+            'restaurant' => function($query) {
+                return $query->select(['id', 'name', 'address', 'image', 'lat', 'lng']);
+            },
+        ])->findOrFail($id);
+
+        return response()->json($cuisine);
     }
 }

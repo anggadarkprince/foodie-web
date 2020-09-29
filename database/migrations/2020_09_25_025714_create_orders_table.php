@@ -26,6 +26,12 @@ class CreateOrdersTable extends Migration
             $table->decimal('delivery_fee', 10, 2)->default(0);
             $table->decimal('delivery_discount', 10, 2)->default(0);
             $table->smallInteger('rating', false, true)->default(0);
+            $table->enum('status', [
+                'PENDING', 'REJECTED', 'CANCELED',
+                'WAITING RESTAURANT CONFIRMATION', 'FINDING COURIER',
+                'COURIER HEADING RESTAURANT', 'COURIER WAITING AT RESTAURANT',
+                'COURIER HEADING CUSTOMER', 'COMPLETED'
+            ]);
             $table->timestamps();
             $table->softDeletes();
 
