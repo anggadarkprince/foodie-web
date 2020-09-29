@@ -28,9 +28,11 @@ Route::get('cuisines/nearby', 'Api\CuisineController@nearby')->name('api.cuisine
 Route::get('cuisines/{id}', 'Api\CuisineController@show')->name('api.cuisines.show');
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('user', 'Api\PassportController@user')->name('api.user.profile');
+    Route::get('user', 'Api\PassportController@user')->name('api.user.account');
     Route::post('logout', 'Api\PassportController@logout')->name('api.auth.logout');
 
+    Route::get('user/profile', 'Api\UserController@profile')->name('api.user.profile');
+    Route::post('user/profile', 'Api\UserController@updateProfile')->name('api.user.update');
     Route::get('user/orders', 'Api\UserController@orders')->name('api.user.orders');
     Route::get('user/transactions', 'Api\UserController@transactions')->name('api.user.transactions');
 });
