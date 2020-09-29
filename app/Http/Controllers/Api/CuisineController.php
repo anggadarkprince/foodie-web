@@ -20,9 +20,11 @@ class CuisineController extends Controller
      * Discover cuisine data.
      * Search params:
      *  category_name (string): find exact category name
-     *  cuisine_name (string): query part of name cuisine name
+     *  cuisine_name (string): query part of name cuisine
      *  nearby (int): radius distance max in meters
      *  restaurant_id (int): find by restaurant id
+     *  query (string): search multiple field such as cuisine name, description, category or restaurant
+     *  current_location (string,string): lat,lng location of user optional param for distance calculation
      *
      * Example:
      *  /api/cuisines/nearby?current_location=-7.2556993,112.7338642&nearby=2000&query=gresik
@@ -38,7 +40,7 @@ class CuisineController extends Controller
      */
     public function discovery(Request $request)
     {
-        $cuisineQuery = (new CuisineSearch)->apply($request);
+        $cuisineQuery = (new CuisineSearch())->apply($request);
 
         return response()->json($cuisineQuery);
     }
@@ -64,11 +66,10 @@ class CuisineController extends Controller
     /**
      * Show single cuisine data in detail.
      *
-     * @param Request $request
      * @param $id
      * @return JsonResponse
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
         $cuisine = Cuisine::with([
             'cuisineImages' => function($query) {

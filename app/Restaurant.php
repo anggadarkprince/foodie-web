@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
-    protected $visible = [
-        'id', 'user_id', 'name', 'address', 'image', 'lat', 'lng', 'restaurant_balance', 'created_at', 'updated_at'
-    ];
     /**
      * Get the cuisines for the restaurant.
      */

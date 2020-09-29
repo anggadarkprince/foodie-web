@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CuisineSearch\Filters;
+namespace App\RestaurantSearch\Filters;
 
 use App\Search\Filter;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,11 +19,10 @@ class Query implements Filter
     public static function apply(Builder $builder, $value, Request $request)
     {
         return $builder->where(function (Builder $query) use ($value) {
-            $query->where('cuisines.cuisine', 'LIKE', '%' . $value . '%');
-            $query->orWhere('cuisines.description', 'LIKE', '%' . $value . '%');
-            $query->orWhere('restaurants.name', 'LIKE', '%' . $value . '%');
+            $query->where('restaurants.name', 'LIKE', '%' . $value . '%');
             $query->orWhere('restaurants.address', 'LIKE', '%' . $value . '%');
-            $query->orWhere('categories.category', 'LIKE', '%' . $value . '%');
+            $query->orWhere('cuisines.cuisine', 'LIKE', '%' . $value . '%');
+            $query->orWhere('cuisines.description', 'LIKE', '%' . $value . '%');
         });
     }
 }

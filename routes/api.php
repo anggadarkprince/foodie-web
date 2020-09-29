@@ -27,6 +27,9 @@ Route::get('cuisines/discovery', 'Api\CuisineController@discovery')->name('api.c
 Route::get('cuisines/nearby', 'Api\CuisineController@nearby')->name('api.cuisines.nearby');
 Route::get('cuisines/{id}', 'Api\CuisineController@show')->name('api.cuisines.show');
 
+Route::get('restaurants/discovery', 'Api\RestaurantController@discovery')->name('api.restaurants.discovery');
+Route::get('restaurants/{id}', 'Api\RestaurantController@show')->name('api.restaurants.show');
+
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\PassportController@user')->name('api.user.account');
     Route::post('logout', 'Api\PassportController@logout')->name('api.auth.logout');

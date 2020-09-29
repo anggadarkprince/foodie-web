@@ -1,16 +1,15 @@
 <?php
 
-
-namespace App\CuisineSearch\Filters;
+namespace App\RestaurantSearch\Filters;
 
 use App\Search\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class Nearby implements Filter
+class CuisineName implements Filter
 {
     /**
-     * Filter nearby restaurant in meters from current location.
+     * Query by cuisine name.
      *
      * @param Builder $builder
      * @param mixed $value
@@ -19,11 +18,6 @@ class Nearby implements Filter
      */
     public static function apply(Builder $builder, $value, Request $request)
     {
-        if (empty($value)) {
-            $value = 5000;
-        }
-        return $builder
-            ->having('distance', '<=', $value)
-            ->orderBy('distance', 'asc');
+        return $builder->where('cuisines.cuisine', 'LIKE', '%' . $value . '%');
     }
 }

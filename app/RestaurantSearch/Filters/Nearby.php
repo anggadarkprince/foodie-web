@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\CuisineSearch\Filters;
+namespace App\RestaurantSearch\Filters;
 
 use App\Search\Filter;
 use Illuminate\Database\Eloquent\Builder;
