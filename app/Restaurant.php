@@ -31,6 +31,14 @@ class Restaurant extends Model
     }
 
     /**
+     * Get the transactions for the restaurant.
+     */
+    public function transactions()
+    {
+        return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    /**
      * Get the order details for the restaurant.
      */
     public function orderDetails()

@@ -24,6 +24,10 @@ class Order extends Model
     const STATUS_COURIER_HEADING_CUSTOMER = 'COURIER HEADING CUSTOMER';
     const STATUS_COMPLETED = 'COMPLETED';
 
+    const PAYMENT_TYPE_CASH = 'CASH';
+    const PAYMENT_TYPE_WALLET = 'WALLET';
+    const PAYMENT_TYPE_MIX = 'MIX';
+
     /**
      * Get the user of the order.
      */

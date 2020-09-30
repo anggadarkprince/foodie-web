@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    const TYPE_ORDER = 'ORDER';
+    const TYPE_TOP_UP = 'TOP UP';
+    const TYPE_REWARD = 'REWARD';
+    const TYPE_TRANSFER = 'TRANSFER';
+    const TYPE_WITHDRAW = 'WITHDRAW';
+
+    const STATUS_IN_PROCESS = 'IN PROCESS';
+    const STATUS_SUCCESS = 'SUCCESS';
+    const STATUS_FAILED = 'FAILED';
+
     /**
-     * Get the user of the transaction.
+     * Get the owning transactionable model.
      */
-    public function user()
+    public function transactionable()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 
     /**

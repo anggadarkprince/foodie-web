@@ -29,6 +29,8 @@ class StoreOrder extends FormRequest
             'payment_type' => ['required', Rule::in(['CASH', 'WALLET', 'MIX'])],
             'description' => ['present', 'max:200'],
             'coupon_code' => ['nullable', 'string', 'max:50'],
+            'total_order' => ['required', 'numeric', 'gte:0'],
+            'wallet_payment' => ['nullable', 'numeric', 'gte:0'],
             'order_discount' => ['numeric', 'gte:0'],
             'delivery_fee' => ['numeric', 'gte:0'],
             'delivery_discount' => ['numeric', 'gte:0'],
