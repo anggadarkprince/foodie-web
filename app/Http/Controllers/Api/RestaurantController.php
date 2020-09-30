@@ -61,7 +61,7 @@ class RestaurantController extends Controller
     {
         $restaurant = $request->user()->restaurant;
 
-        $orders = $restaurant->orders()->orderBy('orders.created_at', 'desc');
+        $orders = $restaurant->orders()->latest();
 
         if ($request->filled('payment_type')) {
             $orders->paymentType($request->get('payment_type'));

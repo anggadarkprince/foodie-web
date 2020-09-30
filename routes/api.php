@@ -40,4 +40,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/orders', 'Api\UserController@orders')->name('api.user.orders');
     Route::get('user/transactions', 'Api\UserController@transactions')->name('api.user.transactions');
     Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('api.restaurant.order');
+
+    Route::post('orders', 'Api\OrderController@store')->name('api.order.store');
+    Route::match(['put', 'post'], 'orders/{id}/take/{courier}', 'Api\OrderController@takeOrder')->name('api.order.take')->where(['id' => '[0-9]+', 'courier' => '[0-9]+']);
+    Route::match(['put', 'post'],'orders/{order}/status', 'Api\OrderController@status')->name('api.order.status')->where('order', '[0-9]+');
 });

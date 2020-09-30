@@ -72,7 +72,7 @@ class UserController extends Controller
     public function updatePhoto(Request $request)
     {
         $this->validate($request, [
-            'avatar' => 'mimes:jpeg,jpg,png,gif|required|max:2000'
+            'avatar' => 'required|file|mimes:jpeg,jpg,png,gif|image|max:2000'
         ]);
 
         try {
@@ -109,7 +109,7 @@ class UserController extends Controller
      */
     public function orders(Request $request)
     {
-        $orders = $request->user()->orders()->paginate(10);
+        $orders = $request->user()->orders()->latest()->paginate(10);
 
         return response()->json($orders);
     }

@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('courier_id')->nullable();
             $table->unsignedBigInteger('restaurant_id')->nullable();
             $table->string('order_number', 50);
-            $table->string('payment_type', 50);
+            $table->string('payment_type', 50)->nullable();
             $table->text('description')->nullable();
             $table->string('coupon_code', 25)->nullable();
             $table->decimal('order_discount', 10, 2)->default(0);

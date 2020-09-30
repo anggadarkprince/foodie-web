@@ -19,7 +19,9 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('cuisine_id');
             $table->string('cuisine', 100);
-            $table->string('category', 100);
+            $table->string('category', 100)->nullable();
+            $table->text('description')->nullable();
+            $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
             $table->smallInteger('rating', false, true)->default(0);
