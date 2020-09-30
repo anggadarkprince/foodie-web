@@ -52,18 +52,23 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Get restaurant transactions.
+     * Get user restaurant transactions.
      *
      * @param Request $request
-     * @param Restaurant $restaurant
      * @return JsonResponse
      */
-    public function orders(Request $request, Restaurant $restaurant)
+    public function orders(Request $request)
     {
+        $restaurant = $request->user()->restaurant;
+
         $orders = $restaurant->orders()->orderBy('orders.created_at', 'desc');
 
-        if ($request->has('payment_type')) {
-            $orders->where('orders.payment_type', $request->get('payment_type'));
+        if ($request->filled('payment_type')) {
+            $orders->paymentType($request->get('payment_type'));
+        }
+
+        if ($request->has('active')) {
+            $orders->active();
         }
 
         return response()->json($orders->paginate(10));

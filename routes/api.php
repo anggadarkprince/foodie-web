@@ -28,8 +28,7 @@ Route::get('cuisines/nearby', 'Api\CuisineController@nearby')->name('api.cuisine
 Route::get('cuisines/{id}', 'Api\CuisineController@show')->name('api.cuisines.show');
 
 Route::get('restaurants/discovery', 'Api\RestaurantController@discovery')->name('api.restaurants.discovery');
-Route::get('restaurants/{id}', 'Api\RestaurantController@show')->name('api.restaurants.show');
-Route::get('restaurants/{restaurant}/orders', 'Api\RestaurantController@orders')->name('api.restaurants.order');
+Route::get('restaurants/{id}', 'Api\RestaurantController@show')->name('api.restaurants.show')->where('id', '[0-9]+');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\PassportController@user')->name('api.user.account');
@@ -40,4 +39,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('user/photo', 'Api\UserController@updatePhoto')->name('api.user.photo');
     Route::get('user/orders', 'Api\UserController@orders')->name('api.user.orders');
     Route::get('user/transactions', 'Api\UserController@transactions')->name('api.user.transactions');
+    Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('api.restaurant.order');
 });

@@ -37,6 +37,17 @@ trait SearchableTrait
     }
 
     /**
+     * Get condition if decorator only will be applied,
+     * if the value is empty or not.
+     *
+     * @return bool
+     */
+    public function applyOnlyIfFilled()
+    {
+        return false;
+    }
+
+    /**
      * Get base model.
      *
      * @param Request $filters
@@ -54,7 +65,7 @@ trait SearchableTrait
      */
     public function getDecoratorNamespace()
     {
-        return substr(get_class(), 0, strrpos( get_class(), '\\')) . '\\Filters\\';
+        return substr(get_class(), 0, strrpos(get_class(), '\\')) . '\\Filters\\';
     }
 
     /**
@@ -81,7 +92,12 @@ trait SearchableTrait
         foreach ($request->all() as $filterName => $value) {
             $decorator = $this->createFilterDecorator($filterName);
 
-            if ($this->isValidDecorator($decorator)) {
+            $willBeApplied = true;
+            if ($this->applyOnlyIfFilled()) {
+                $willBeApplied = $request->filled($filterName);
+            }
+
+            if ($this->isValidDecorator($decorator) && $willBeApplied) {
                 $query = $decorator::apply($query, $value, $request);
             }
         }
