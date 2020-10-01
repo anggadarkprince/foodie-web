@@ -73,4 +73,25 @@ class RestaurantController extends Controller
 
         return response()->json($orders->paginate(10));
     }
+
+    /**
+     * Get restaurant transactions.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function transactions(Request $request)
+    {
+        $transactions = $request->user()->restaurant->transactions()->latest();
+
+        if ($request->filled('type')) {
+            $transactions->type($request->get('type'));
+        }
+
+        if ($request->filled('status')) {
+            $transactions->status($request->get('status'));
+        }
+
+        return response()->json($transactions->paginate(10));
+    }
 }

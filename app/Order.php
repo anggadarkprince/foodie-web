@@ -77,6 +77,39 @@ class Order extends Model
     }
 
     /**
+     * Scope a query to only include nearby of a given lat and lng.
+     *
+     * @param Builder $query
+     * @param $lat
+     * @param $lng
+     * @param int $radius
+     * @return Builder
+     */
+    public function scopeNearby(Builder $query, $lat, $lng, $radius = 5000)
+    {
+        return $query->select([
+            'orders.id',
+            'orders.user_id',
+            'orders.restaurant_id',
+            'orders.order_number',
+            'orders.payment_type',
+            'orders.description',
+            'orders.delivery_address',
+            'orders.delivery_lat',
+            'orders.delivery_lng',
+            'orders.delivery_fee',
+            'orders.created_at',
+            DB::raw('SQRT(
+                POW(69.1 * (restaurants.lat - ' . addslashes($lat) . '), 2) +
+                POW(69.1 * (' . addslashes($lng) . ' - restaurants.lng) * COS(delivery_lat / 57.3), 2)
+            ) * 1609.34 AS distance')
+        ])
+            ->join('restaurants', 'restaurants.id', '=', 'orders.restaurant_id')
+            ->having('distance', '<=', $radius)
+            ->orderBy('distance', 'asc');
+    }
+
+    /**
      * Scope a query to only include orders of a given status.
      *
      * @param Builder $query

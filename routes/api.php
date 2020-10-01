@@ -36,7 +36,8 @@ Route::name('api.')->group(function () {
         Route::post('user/photo', 'Api\UserController@updatePhoto')->name('user.photo');
         Route::get('user/orders', 'Api\UserController@orders')->name('user.orders');
         Route::get('user/transactions', 'Api\UserController@transactions')->name('user.transactions');
-        Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurant.order');
+        Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurant.orders');
+        Route::get('restaurants/transactions', 'Api\RestaurantController@transactions')->name('restaurant.transactions');
 
         Route::post('orders', 'Api\OrderController@store')->name('order.store');
         Route::put('orders/{order}/status', 'Api\OrderController@updateStatus')->name('order.status')->where('order', '[0-9]+');
@@ -52,6 +53,7 @@ Route::prefix('courier')->name('api.courier.')->group(function() {
         Route::get('user', 'Api\Courier\SanctumController@user')->name('user.account');
         Route::post('logout', 'Api\Courier\SanctumController@logout')->name('auth.logout');
 
+        Route::get('orders/nearby/{lat}/{lng}', 'Api\Courier\OrderController@nearby')->name('order.nearby');
         Route::put('orders/{id}/take', 'Api\Courier\OrderController@takeOrder')->name('order.take')->where(['id' => '[0-9]+']);
     });
 });

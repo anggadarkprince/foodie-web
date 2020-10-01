@@ -12,6 +12,36 @@ use Throwable;
 class OrderController extends Controller
 {
     /**
+     * Get active outstanding order nearby.
+     *
+     * @param $lat
+     * @param $lng
+     * @return JsonResponse
+     */
+    public function nearby($lat, $lng)
+    {
+        $orders = Order::with([
+            'restaurant' => function($query) {
+                return $query->select('id', 'name', 'image', 'address');
+            },
+            'user' => function($query) {
+                return $query->select('id', 'name', 'email', 'avatar');
+            },
+            'orderDetails' => function($query) {
+                return $query->select('id', 'cuisine', 'category', 'price', 'discount');
+            },
+        ])
+            ->status(Order::STATUS_FINDING_COURIER)
+            ->nearby($lat, $lng)
+            ->get();
+
+        $orders->makeHidden('user_id');
+        $orders->makeHidden('restaurant_id');
+
+        return response()->json($orders);
+    }
+
+    /**
      * Take order and update status.
      *
      * @param Request $request
