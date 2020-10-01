@@ -15,16 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('transactionable_id');
+            $table->string('transactionable_type');
             $table->string('no_reference', 100);
             $table->enum('type', ['TOP UP', 'ORDER', 'REWARD', 'TRANSFER']);
             $table->decimal('total', 20, 2)->default(0);
             $table->enum('status', ['SUCCESS', 'FAILED', 'IN PROCESS', 'WITHDRAW']);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            $table->index(['transactionable_id', 'transactionable_type']);
         });
     }
 

@@ -4,11 +4,18 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 class Courier extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password', 'id_card', 'date_of_birth', 'address', 'vehicle_type', 'vehicle_plat'];
 
     /**
      * The attributes that should be hidden for arrays.

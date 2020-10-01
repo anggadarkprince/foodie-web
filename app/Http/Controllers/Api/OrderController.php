@@ -101,35 +101,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Take order and update status.
-     *
-     * @param int $id
-     * @param Courier $courier
-     * @return JsonResponse
-     */
-    public function takeOrder(int $id, Courier $courier)
-    {
-        try {
-            return DB::transaction(function () use ($id, $courier) {
-                $order = Order::lockForUpdate()->find($id);
-
-                $taken = false;
-                if ($order->status == Order::STATUS_FINDING_COURIER) {
-                    $order->status = Order::STATUS_COURIER_HEADING_RESTAURANT;
-                    $order->courier_id = $courier->id;
-
-                    $taken = $order->save();
-                }
-                return response()->json(['result' => $taken]);
-            });
-        } catch (Throwable $e) {
-            return response()->json([
-                'errors' => 'Something went wrong, try again or contact administrator'
-            ], 500);
-        }
-    }
-
-    /**
      * Rate order and update status.
      *
      * @param Request $request

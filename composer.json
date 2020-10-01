@@ -17,6 +17,7 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^7.24",
         "laravel/passport": "^9.3",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0"
     },
     "require-dev": {
