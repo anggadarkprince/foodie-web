@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\SaveRestaurant;
 use App\Restaurant;
 use App\RestaurantSearch\RestaurantSearch;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -93,5 +95,38 @@ class RestaurantController extends Controller
         }
 
         return response()->json($transactions->paginate(10));
+    }
+
+    /**
+     * Update restaurant data.
+     *
+     * @param SaveRestaurant $request
+     * @return JsonResponse
+     */
+    public function update(SaveRestaurant $request)
+    {
+        try {
+            $user = $request->user();
+
+            $restaurantInput = $request->except(['image']);
+
+            $file = $request->file('image');
+            if (!empty($file)) {
+                $uploadPath = 'restaurants/' . date('Ym');
+                $path = $file->storePublicly($uploadPath, 'public');
+                $restaurantInput['image'] = $path;
+            }
+            $restaurant = Restaurant::updateOrCreate(
+                ['user_id' => $user->id],
+                $restaurantInput
+            );
+
+            return response()->json($restaurant);
+        } catch (Exception $e) {
+            return response()->json([
+                'result' => false,
+                'errors' => 'Update restaurant failed, try again or contact administrator'
+            ], 500);
+        }
     }
 }

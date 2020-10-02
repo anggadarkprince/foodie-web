@@ -39,6 +39,7 @@ Route::name('api.')->group(function () {
 
         Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurants.orders');
         Route::get('restaurants/transactions', 'Api\RestaurantController@transactions')->name('restaurants.transactions');
+        Route::post('restaurants', 'Api\RestaurantController@update')->name('restaurants.update');
 
         Route::resource('cuisines', 'Api\CuisineController')->only([
             'store', 'update', 'destroy'
