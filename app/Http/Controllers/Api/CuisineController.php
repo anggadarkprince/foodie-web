@@ -7,7 +7,7 @@ use App\CuisineImage;
 use App\CuisineSearch\CuisineSearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\DestroyCuisine;
-use App\Http\Requests\Api\StoreCuisine;
+use App\Http\Requests\Api\SaveCuisine;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -95,51 +95,93 @@ class CuisineController extends Controller
     /**
      *Store new cuisine data.
      *
-     * @param StoreCuisine $request
+     * @param SaveCuisine $request
      * @return JsonResponse
      */
-    public function store(StoreCuisine $request)
+    public function store(SaveCuisine $request)
     {
         try {
             return DB::transaction(function () use ($request) {
                 $restaurant = $request->user()->restaurant;
 
-                // store cuisine data
-                $file = $request->file('image');
-                $uploadPath = 'cuisines/' . date('Ym');
-                $path = $file->storePublicly($uploadPath, 'public');
+                $cuisine = new Cuisine(['restaurant_id' => $restaurant->id]);
+                $result = $this->save($cuisine, $request);
 
-                $cuisineInput = $request->except(['images', 'image']);
-                $cuisineInput['image'] = $path;
-
-                $newCuisine = new Cuisine($cuisineInput);
-                $cuisine = $restaurant->cuisines()->save($newCuisine);
-
-                // store cuisine detail
-                $detailInputs = $request->only('images');
-                if(!empty($detailInputs)) {
-                    foreach ($detailInputs['images'] as &$detailFile) {
-                        $uploadPath = 'cuisine-details/' . date('Ym');
-                        $detailFile['image'] = $detailFile['image']->storePublicly($uploadPath, 'public');
-                    }
-                    $newCuisineImages = collect($detailInputs['images'])->map(function ($item) {
-                        return new CuisineImage([
-                            'image' => $item['image'],
-                            'title' => $item['title']
-                        ]);
-                    });
-                    $cuisine->images = $cuisine->cuisineImages()->saveMany($newCuisineImages);
-                }
-
-                return response()->json($cuisine);
+                return response()->json($result);
             });
         } catch (Throwable $e) {
             return response()->json([
                 'result' => false,
-                'errors' => 'Something went wrong, try again or contact administrator'
+                'e' => $e->getMessage(),
+                'errors' => 'Store cuisine failed, try again or contact administrator'
             ], 500);
         }
 
+    }
+
+    /**
+     * Update available cuisine.
+     *
+     * @param SaveCuisine $request
+     * @param Cuisine $cuisine
+     * @return JsonResponse
+     */
+    public function update(SaveCuisine $request, Cuisine $cuisine)
+    {
+        try {
+            return DB::transaction(function () use ($request, $cuisine) {
+                $result = $this->save($cuisine, $request);
+
+                return response()->json($result);
+            });
+        } catch (Throwable $e) {
+            return response()->json([
+                'result' => false,
+                'errors' => 'Update cuisine failed, try again or contact administrator'
+            ], 500);
+        }
+    }
+
+    /**
+     * Save or update cuisine data.
+     *
+     * @param Cuisine $cuisine
+     * @param Request $request
+     * @return Cuisine
+     */
+    private function save(Cuisine $cuisine, Request $request)
+    {
+        // store cuisine data
+        $cuisineInput = $request->except(['images', 'image']);
+
+        $file = $request->file('image');
+        if (!empty($file)) {
+            $uploadPath = 'cuisines/' . date('Ym');
+            $path = $file->storePublicly($uploadPath, 'public');
+            $cuisineInput['image'] = $path;
+        }
+
+        $cuisine->fill($cuisineInput);
+        $cuisine->save();
+
+        // store cuisine detail
+        $cuisine->cuisineImages()->delete();
+        $detailInputs = $request->only('images');
+        if(!empty($detailInputs)) {
+            foreach ($detailInputs['images'] as &$detailFile) {
+                $uploadPath = 'cuisine-details/' . date('Ym');
+                $detailFile['image'] = $detailFile['image']->storePublicly($uploadPath, 'public');
+            }
+            $newCuisineImages = collect($detailInputs['images'])->map(function ($item) {
+                return new CuisineImage([
+                    'image' => $item['image'],
+                    'title' => $item['title']
+                ]);
+            });
+            $cuisine->images = $cuisine->cuisineImages()->saveMany($newCuisineImages);
+        }
+
+        return $cuisine;
     }
 
     /**

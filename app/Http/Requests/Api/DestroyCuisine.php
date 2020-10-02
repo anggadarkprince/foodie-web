@@ -16,10 +16,11 @@ class DestroyCuisine extends FormRequest
     {
         $cuisine = $this->route('cuisine');
 
+        $isEmailVerified = !empty($this->user()->email_verified_at);
         $isCustomer = $this->user()->type == User::TYPE_CUSTOMER;
         $isOwnedByRestaurant = $cuisine->restaurant->user->id == $this->user()->id;
 
-        return $isCustomer && $isOwnedByRestaurant;
+        return $isEmailVerified && $isCustomer && $isOwnedByRestaurant;
     }
 
     /**

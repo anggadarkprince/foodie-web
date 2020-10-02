@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCuisine extends FormRequest
+class SaveCuisine extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,18 @@ class StoreCuisine extends FormRequest
      */
     public function authorize()
     {
-        return !empty($this->user()->email_verified_at);
+        $cuisine = $this->route('cuisine');
+
+        $isEmailVerified = !empty($this->user()->email_verified_at);
+
+        $isAllowToUpdate = true;
+        if (!is_null($cuisine) || strtolower($this->method()) == 'put') {
+            $isCustomer = $this->user()->type == User::TYPE_CUSTOMER;
+            $isOwnedByRestaurant = $cuisine->restaurant->user->id == $this->user()->id;
+            $isAllowToUpdate = $isCustomer && $isOwnedByRestaurant;
+        }
+
+        return $isEmailVerified && $isAllowToUpdate;
     }
 
     /**

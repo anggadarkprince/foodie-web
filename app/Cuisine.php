@@ -12,7 +12,7 @@ class Cuisine extends Model
      *
      * @var array
      */
-    protected $fillable = ['category_id', 'cuisine', 'image', 'description', 'price', 'discount'];
+    protected $fillable = ['restaurant_id', 'category_id', 'cuisine', 'image', 'description', 'price', 'discount'];
 
     /**
      * Get the cuisine image.
