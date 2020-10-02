@@ -13,7 +13,7 @@ class UpdateProfile extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return !empty($this->user()->email_verified_at);
     }
 
     /**

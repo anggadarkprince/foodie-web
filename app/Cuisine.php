@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Storage;
 
 class Cuisine extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['category_id', 'cuisine', 'image', 'description', 'price', 'discount'];
 
     /**
      * Get the cuisine image.

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Cuisine;
+use App\CuisineImage;
 use App\CuisineSearch\CuisineSearch;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\DestroyCuisine;
+use App\Http\Requests\Api\StoreCuisine;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
  * Discover cuisine with many parameter filters.
@@ -84,5 +90,77 @@ class CuisineController extends Controller
         ])->findOrFail($id);
 
         return response()->json($cuisine);
+    }
+
+    /**
+     *Store new cuisine data.
+     *
+     * @param StoreCuisine $request
+     * @return JsonResponse
+     */
+    public function store(StoreCuisine $request)
+    {
+        try {
+            return DB::transaction(function () use ($request) {
+                $restaurant = $request->user()->restaurant;
+
+                // store cuisine data
+                $file = $request->file('image');
+                $uploadPath = 'cuisines/' . date('Ym');
+                $path = $file->storePublicly($uploadPath, 'public');
+
+                $cuisineInput = $request->except(['images', 'image']);
+                $cuisineInput['image'] = $path;
+
+                $newCuisine = new Cuisine($cuisineInput);
+                $cuisine = $restaurant->cuisines()->save($newCuisine);
+
+                // store cuisine detail
+                $detailInputs = $request->only('images');
+                if(!empty($detailInputs)) {
+                    foreach ($detailInputs['images'] as &$detailFile) {
+                        $uploadPath = 'cuisine-details/' . date('Ym');
+                        $detailFile['image'] = $detailFile['image']->storePublicly($uploadPath, 'public');
+                    }
+                    $newCuisineImages = collect($detailInputs['images'])->map(function ($item) {
+                        return new CuisineImage([
+                            'image' => $item['image'],
+                            'title' => $item['title']
+                        ]);
+                    });
+                    $cuisine->images = $cuisine->cuisineImages()->saveMany($newCuisineImages);
+                }
+
+                return response()->json($cuisine);
+            });
+        } catch (Throwable $e) {
+            return response()->json([
+                'result' => false,
+                'errors' => 'Something went wrong, try again or contact administrator'
+            ], 500);
+        }
+
+    }
+
+    /**
+     * Destroy cuisine data.
+     *
+     * @param DestroyCuisine $request
+     * @param Cuisine $cuisine
+     * @return JsonResponse
+     */
+    public function destroy(DestroyCuisine $request, Cuisine $cuisine)
+    {
+        try {
+            $delete = $cuisine->delete();
+
+            return response()->json(['result' => $delete]);
+        }
+        catch (Exception $e) {
+            return response()->json([
+                'result' => false,
+                'errors' => 'Something went wrong, try again or contact administrator'
+            ], 500);
+        }
     }
 }

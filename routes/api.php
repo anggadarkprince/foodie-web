@@ -36,8 +36,13 @@ Route::name('api.')->group(function () {
         Route::post('user/photo', 'Api\UserController@updatePhoto')->name('user.photo');
         Route::get('user/orders', 'Api\UserController@orders')->name('user.orders');
         Route::get('user/transactions', 'Api\UserController@transactions')->name('user.transactions');
-        Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurant.orders');
-        Route::get('restaurants/transactions', 'Api\RestaurantController@transactions')->name('restaurant.transactions');
+
+        Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurants.orders');
+        Route::get('restaurants/transactions', 'Api\RestaurantController@transactions')->name('restaurants.transactions');
+
+        Route::resource('cuisines', 'Api\CuisineController')->only([
+            'store', 'update', 'destroy'
+        ]);
 
         Route::post('orders', 'Api\OrderController@store')->name('order.store');
         Route::put('orders/{order}/status', 'Api\OrderController@updateStatus')->name('order.status')->where('order', '[0-9]+');

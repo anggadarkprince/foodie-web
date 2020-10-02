@@ -7,7 +7,33 @@ use Illuminate\Support\Facades\Storage;
 
 class CuisineImage extends Model
 {
-    protected $visible = ['id', 'image', 'title'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'cuisine_id', 'image', 'title'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->created_at = $model->freshTimestamp();
+        });
+    }
 
     /**
      * Get the cuisine image.
