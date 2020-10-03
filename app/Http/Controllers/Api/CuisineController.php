@@ -52,24 +52,6 @@ class CuisineController extends Controller
     }
 
     /**
-     * Discover nearby cuisine data with default in radius 5KM,
-     * we could add constraint for `current_location` param.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function nearby(Request $request)
-    {
-        if (!$request->has('nearby')) {
-            $request->request->add(['nearby' => 5000]);
-        }
-
-        $nearbyCuisineQuery = (new CuisineSearch)->apply($request);
-
-        return response()->json($nearbyCuisineQuery);
-    }
-
-    /**
      * Show single cuisine data in detail.
      *
      * @param $id

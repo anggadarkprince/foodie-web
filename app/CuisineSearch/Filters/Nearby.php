@@ -19,7 +19,7 @@ class Nearby implements Filter
      */
     public static function apply(Builder $builder, $value, Request $request)
     {
-        if (empty($value)) {
+        if (empty($value) || !is_numeric($value)) {
             $value = 5000;
         }
         return $builder

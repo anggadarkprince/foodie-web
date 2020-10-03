@@ -15,13 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('api.')->group(function () {
+    Route::post('register', 'Api\PassportController@register')->name('auth.register');
     Route::post('login', 'Api\PassportController@login')->name('auth.login');
     Route::post('token', 'Api\PassportController@token')->name('auth.token');
-    Route::post('register', 'Api\PassportController@register')->name('auth.register');
 
     Route::get('categories', 'Api\CategoryController@index')->name('categories.index');
     Route::get('cuisines/discovery', 'Api\CuisineController@discovery')->name('cuisines.discovery');
-    Route::get('cuisines/nearby', 'Api\CuisineController@nearby')->name('cuisines.nearby');
     Route::get('cuisines/{id}', 'Api\CuisineController@show')->name('cuisines.show');
 
     Route::get('restaurants/discovery', 'Api\RestaurantController@discovery')->name('restaurants.discovery');
@@ -33,7 +32,7 @@ Route::name('api.')->group(function () {
 
         Route::get('user/profile', 'Api\UserController@profile')->name('user.profile');
         Route::post('user/profile', 'Api\UserController@updateProfile')->name('user.update');
-        Route::post('user/photo', 'Api\UserController@updatePhoto')->name('user.photo');
+        Route::put('user/photo', 'Api\UserController@updatePhoto')->name('user.photo');
         Route::get('user/orders', 'Api\UserController@orders')->name('user.orders');
         Route::get('user/transactions', 'Api\UserController@transactions')->name('user.transactions');
 
