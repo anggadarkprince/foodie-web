@@ -36,6 +36,9 @@ Route::name('api.')->group(function () {
         Route::get('user/orders', 'Api\UserController@orders')->name('user.orders');
         Route::get('user/transactions', 'Api\UserController@transactions')->name('user.transactions');
 
+        Route::post('transactions/deposit', 'Api\TransactionController@deposit')->name('transactions.deposit');
+        Route::post('transactions/withdraw', 'Api\TransactionController@withdraw')->name('transactions.withdraw');
+
         Route::get('restaurants/orders', 'Api\RestaurantController@orders')->name('restaurants.orders');
         Route::get('restaurants/transactions', 'Api\RestaurantController@transactions')->name('restaurants.transactions');
         Route::post('restaurants', 'Api\RestaurantController@update')->name('restaurants.update');
