@@ -40,10 +40,10 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurants = Restaurant::with([
-            'user' => function($query) {
+            'user' => function ($query) {
                 return $query->select(['id', 'name', 'avatar', 'email']);
             },
-            'cuisines' => function($query) {
+            'cuisines' => function ($query) {
                 return $query->select(['id', 'cuisine', 'restaurant_id', 'image', 'description', 'price', 'discount']);
             },
         ])->findOrFail($id);
@@ -63,7 +63,7 @@ class RestaurantController extends Controller
     {
         $restaurant = $request->user()->restaurant;
 
-        $orders = $restaurant->orders()->latest();
+        $orders = $restaurant->orders();
 
         if ($request->filled('payment_type')) {
             $orders->paymentType($request->get('payment_type'));
@@ -71,6 +71,20 @@ class RestaurantController extends Controller
 
         if ($request->has('active')) {
             $orders->active();
+        }
+
+        if ($request->filled('status')) {
+            $orders->status($request->get('status'));
+        }
+
+        if ($request->has('order_method')) {
+            if (in_array($request->get('order_method'), ['oldest', 'latest', 'desc', '-1'])) {
+                $orders->latest();
+            } else {
+                $orders->earlier();
+            }
+        } else {
+            $orders->latest();
         }
 
         return response()->json($orders->paginate(10));

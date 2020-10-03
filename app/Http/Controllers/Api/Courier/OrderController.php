@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Courier;
 
+use App\Http\Controllers\Api\UpdateStatusOrder;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\JsonResponse;
@@ -11,6 +12,8 @@ use Throwable;
 
 class OrderController extends Controller
 {
+    use UpdateStatusOrder;
+
     /**
      * Get active outstanding order nearby.
      *
@@ -65,8 +68,55 @@ class OrderController extends Controller
             });
         } catch (Throwable $e) {
             return response()->json([
-                'errors' => 'Something went wrong, try again or contact administrator'
+                'errors' => 'Take order failed, try again or contact administrator'
             ], 500);
         }
     }
+
+    /**
+     * Set status to Order::STATUS_COURIER_HEADING_RESTAURANT
+     *
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function waitingOrder(Order $order)
+    {
+        try {
+            $result = $this->updateStatusOrder(
+                $order,
+                Order::STATUS_COURIER_WAITING_AT_RESTAURANT,
+                Order::STATUS_COURIER_HEADING_RESTAURANT
+            );
+
+            return response()->json(['result' => $result]);
+        } catch (Throwable $e) {
+            return response()->json([
+                'errors' => 'Update status order failed, try again or contact administrator'
+            ], 500);
+        }
+    }
+
+    /**
+     * Set status to Order::STATUS_COMPLETED
+     *
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function completeOrder(Order $order)
+    {
+        try {
+            $result = $this->updateStatusOrder(
+                $order,
+                Order::STATUS_COMPLETED,
+                Order::STATUS_COURIER_HEADING_CUSTOMER
+            );
+
+            return response()->json(['result' => $result]);
+        } catch (Throwable $e) {
+            return response()->json([
+                'errors' => 'Update status order failed, try again or contact administrator'
+            ], 500);
+        }
+    }
+
 }

@@ -46,8 +46,9 @@ Route::name('api.')->group(function () {
         ]);
 
         Route::post('orders', 'Api\OrderController@store')->name('order.store');
-        Route::put('orders/{order}/status', 'Api\OrderController@updateStatus')->name('order.status')->where('order', '[0-9]+');
-        Route::put('orders/{order}/rate', 'Api\OrderController@rateOrder')->name('order.rate')->where('order', '[0-9]+');
+        Route::put('orders/{order}/confirm', 'Api\OrderController@confirmOrder')->name('order.confirm')->where('order', '[0-9]+');
+        Route::put('orders/{order}/served', 'Api\OrderController@serveOrder')->name('order.served')->where('order', '[0-9]+');
+        Route::put('orders/{order}/rating', 'Api\OrderController@rateOrder')->name('order.rating')->where('order', '[0-9]+');
     });
 });
 
@@ -61,5 +62,7 @@ Route::prefix('courier')->name('api.courier.')->group(function() {
 
         Route::get('orders/nearby/{lat}/{lng}', 'Api\Courier\OrderController@nearby')->name('order.nearby');
         Route::put('orders/{id}/take', 'Api\Courier\OrderController@takeOrder')->name('order.take')->where(['id' => '[0-9]+']);
+        Route::put('orders/{order}/waiting', 'Api\OrderController@waitingOrder')->name('order.waiting')->where('order', '[0-9]+');
+        Route::put('orders/{order}/complete', 'Api\OrderController@completeOrder')->name('order.complete')->where('order', '[0-9]+');
     });
 });

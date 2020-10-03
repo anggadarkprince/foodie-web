@@ -148,6 +148,17 @@ class Order extends Model
     }
 
     /**
+     * Scope a query to order by newest order.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeEarlier(Builder $query)
+    {
+        return $query->orderBy('orders.created_at', 'desc');
+    }
+
+    /**
      * Scope a query to order by today.
      *
      * @param Builder $query

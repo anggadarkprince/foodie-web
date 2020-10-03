@@ -16,8 +16,13 @@ use Throwable;
 
 class OrderController extends Controller
 {
+    use UpdateStatusOrder;
+
     /**
-     * Store initial order.
+     * Store initial order and set status .
+     *
+     * status after update:
+     * Order::STATUS_WAITING_RESTAURANT_CONFIRMATION.
      *
      * @param StoreOrder $request
      * @return JsonResponse
@@ -33,7 +38,7 @@ class OrderController extends Controller
                 $totalOrder = $request->input('total_order');
                 $request->request->add([
                     'order_number' => Order::getOrderNumber($user),
-                    'status' => Order::STATUS_PENDING,
+                    'status' => Order::STATUS_WAITING_RESTAURANT_CONFIRMATION,
                     'payment_type' => $request->filled('wallet_payment')
                         ? ($walletPayment < $totalOrder ? Order::PAYMENT_TYPE_MIX : Order::PAYMENT_TYPE_WALLET)
                         : Order::PAYMENT_TYPE_CASH
@@ -79,18 +84,22 @@ class OrderController extends Controller
     }
 
     /**
-     * Update status order.
+     * Confirm requested order by restaurant and ready to finding driver.
      *
-     * @param Request $request
+     * status after update:
+     * Order::STATUS_FINDING_COURIER.
+     *
      * @param Order $order
      * @return JsonResponse
      */
-    public function updateStatus(Request $request, Order $order)
+    public function confirmOrder(Order $order)
     {
         try {
-            $order->status = $request->input('status');
-
-            $result = $order->save();
+            $result = $this->updateStatusOrder(
+                $order,
+                Order::STATUS_FINDING_COURIER,
+                Order::STATUS_WAITING_RESTAURANT_CONFIRMATION
+            );
 
             return response()->json(['result' => $result]);
         } catch (Throwable $e) {
@@ -101,7 +110,33 @@ class OrderController extends Controller
     }
 
     /**
-     * Rate order and update status.
+     * Order is served by restaurant, courier ready to deliver to customer.
+     *
+     * status after update:
+     * Order::STATUS_COURIER_HEADING_CUSTOMER
+     *
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function serveOrder(Order $order)
+    {
+        try {
+            $result = $this->updateStatusOrder(
+                $order,
+                Order::STATUS_COURIER_HEADING_CUSTOMER,
+                Order::STATUS_COURIER_WAITING_AT_RESTAURANT
+            );
+
+            return response()->json(['result' => $result]);
+        } catch (Throwable $e) {
+            return response()->json([
+                'errors' => 'Update status order failed, try again or contact administrator'
+            ], 500);
+        }
+    }
+
+    /**
+     * Rate order after order delivered / completed to customer.
      *
      * @param Request $request
      * @param Order $order
