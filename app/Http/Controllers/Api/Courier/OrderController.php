@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Courier;
 
 use App\Http\Controllers\Api\UpdateStatusOrder;
 use App\Http\Controllers\Controller;
-use App\Order;
+use App\Models\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

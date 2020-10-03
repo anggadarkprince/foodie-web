@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Order;
+use App\Models\Order;
 
 trait UpdateStatusOrder
 {

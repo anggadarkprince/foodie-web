@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Cuisine;
-use App\CuisineImage;
-use App\CuisineSearch\CuisineSearch;
+use App\Models\Cuisine;
+use App\Models\CuisineImage;
+use App\Models\CuisineSearch\CuisineSearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\DestroyCuisine;
 use App\Http\Requests\Api\SaveCuisine;

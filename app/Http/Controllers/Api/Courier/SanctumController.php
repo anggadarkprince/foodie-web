@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Api\Courier;
 
-
-use App\Courier;
+use App\Models\Courier;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;

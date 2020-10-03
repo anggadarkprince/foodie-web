@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Courier;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreOrder;
-use App\Order;
-use App\OrderDetail;
-use App\Transaction;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
