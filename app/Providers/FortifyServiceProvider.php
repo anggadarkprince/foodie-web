@@ -6,7 +6,12 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Http\Responses\PasswordResetResponse;
+use App\Http\Responses\RegisterResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Contracts\PasswordResetResponse as PasswordResetResponseContract;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -18,7 +23,8 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(PasswordResetResponseContract::class, PasswordResetResponse::class);
+        $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
     }
 
     /**
@@ -45,12 +51,19 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.forgot-password');
         });
 
-        Fortify::resetPasswordView(function ($request) {
-            return view('auth.reset-password', ['request' => $request]);
+        Fortify::resetPasswordView(function (Request $request) {
+            $email = $request->get('email');
+            $token = $request->token;
+            return view('auth.reset-password', compact('email', 'token'));
         });
 
         Fortify::verifyEmailView(function () {
             return view('auth.verify-email');
         });
+
+        Fortify::confirmPasswordView(function () {
+            return view('auth.confirm-password');
+        });
+
     }
 }

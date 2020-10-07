@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="title m-b-md">
-        Home
+        Account
     </div>
 @endsection

@@ -17,6 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
+Route::get('/dashboard', function () {
     return view('home.index');
-})->middleware(['auth']);
+})->middleware(['auth', 'verified']);
+
+Route::middleware(['auth', 'verified'])->name('admin.')->group(function() {
+    Route::get('dashboard', function () {
+        return view('home.index');
+    })->name('dashboard');
+
+    Route::get('account', function () {
+        return view('account.index');
+    })->middleware('password.confirm')->name('account');
+});

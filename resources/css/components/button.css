@@ -1,0 +1,14 @@
+.button-primary {
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-green-100 bg-green-500
+}
+
+.button-primary:hover {
+    @apply bg-green-600;
+}
+
+@screen sm {
+    .button-lg {
+        @apply py-3;
+        @apply text-lg;
+    }
+}
