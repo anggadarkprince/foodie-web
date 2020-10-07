@@ -27,6 +27,6 @@ Route::middleware(['auth', 'verified'])->name('admin.')->group(function() {
     })->name('dashboard');
 
     Route::get('account', function () {
-        return view('account.index');
+        return view('account.index', ['user' => request()->user()]);
     })->middleware('password.confirm')->name('account');
 });
