@@ -23,14 +23,14 @@
 <body>
 <div class="flex bg-gray-100 text-gray-700" id="wrapper">
     <!-- Sidebar -->
-    <div class="bg-white flex flex-col min-h-screen shadow-sm" id="sidebar-wrapper" style="flex-basis: 13rem">
-        <div class="px-4 py-2 bg-green-100 rounded-full mx-3 mt-3 text-center group" style="width: 230px">
-            <a href="{{ route('admin.dashboard') }}" class="text-green-500 flex items-center hover:text-green-600">
+    <div class="bg-white flex flex-col min-h-screen shadow-sm" id="sidebar-wrapper" style="transition: margin .15s ease-in-out;">
+        <div class="px-4 py-2 bg-green-100 rounded-full mx-3 mt-3 text-center group">
+            <a href="{{ route('admin.dashboard') }}" class="text-green-500 flex items-center justify-center hover:text-green-600">
                 <i class="mdi mdi-storefront-outline text-xl mr-1"></i>
                 <span class="text-lg uppercase">{{ config('app.name') }}</span>
             </a>
         </div>
-        <ul class="overflow-hidden list-none flex flex-col flex-auto pb-5">
+        <ul class="overflow-hidden list-none flex flex-col flex-auto pb-5" style="width: 245px">
             <li class="mt-2">
                 <a href="{{ route('admin.account') }}" class="flex items-center py-2 px-5 group">
                     <img src="http://sso.transcon-indonesia.local/assets/dist/img/no-avatar.png"
@@ -52,12 +52,12 @@
                 </a>
             </li>
             <li>
-                <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('roles') || request()->is('users') ? ' bg-green-100' : '' }}">
-                    <i class="mdi mdi-lock-outline mr-2"></i>
+                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 collapsed menu-toggle{{ request()->is('roles') || request()->is('users') ? ' bg-green-100' : '' }}">
+                    <i class="mdi mdi-lock-outline mr-2 pointer-events-none"></i>
                     {{ __('User Access') }}
-                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
                 </a>
-                <div>
+                <div id="submenu-user-access" class="sidebar-submenu submenu-hide">
                     <ul class="overflow-hidden flex flex-col pl-6 pb-2">
                         <li>
                             <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups') ? ' bg-green-100' : '' }}" href="{{ url('groups') }}">
@@ -70,7 +70,7 @@
                                 <i class="mdi mdi-account-multiple-outline mr-2"></i>
                                 {{ __('Users') }}
                                 <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
-                                    12 New
+                                    12
                                 </span>
                             </a>
                         </li>
@@ -78,12 +78,12 @@
                 </div>
             </li>
             <li>
-                <a class="flex items-center py-2 px-5 hover:bg-green-100">
-                    <i class="mdi mdi-package-variant mr-2"></i>
+                <a href="#submenu-foodie" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle">
+                    <i class="mdi mdi-package-variant mr-2 pointer-events-none"></i>
                     {{ __('Foodie') }}
-                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
                 </a>
-                <div>
+                <div id="submenu-foodie" class="sidebar-submenu">
                     <ul class="overflow-hidden flex flex-col pl-6 pb-2">
                         <li>
                             <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('categories') ? ' bg-green-100' : '' }}" href="{{ url('roles') }}">
@@ -95,12 +95,18 @@
                             <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('restaurant') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
                                 <i class="mdi mdi-storefront-outline mr-2"></i>
                                 {{ __('Restaurant') }}
+                                <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">
+                                    56
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('cuisines') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
                                 <i class="mdi mdi-food-apple-outline mr-2"></i>
                                 {{ __('Cuisines') }}
+                                <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">
+                                    34
+                                </span>
                             </a>
                         </li>
                     </ul>
@@ -153,7 +159,7 @@
     </div>
     <div id="content-wrapper" class="flex flex-col w-full min-h-screen h-full">
         <div class="flex items-center px-4 py-2 bg-green-500 text-white sm:h-16">
-            <i class="mdi mdi-menu text-xl sm:text-2xl py-1 cursor-pointer"></i>
+            <i class="mdi mdi-menu text-xl sm:text-2xl py-1 cursor-pointer sidebar-toggle"></i>
             <div class="align-middle ml-4 opacity-50">
                 <i class="mdi mdi-magnify text-md mr-1"></i>
                 <span class="hidden sm:inline-block">Search over the app...</span>
@@ -171,8 +177,24 @@
                         13
                     </span>
                 </li>
-                <li class="inline-block py-2 pl-3 cursor-pointer leading-7 align-top">
-                    {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i>
+                <li class="inline-block py-2 px-3 cursor-pointer leading-7 align-top">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right show">
+                            <a href="#" class="dropdown-item">
+                                <i class="mdi mdi-speedometer mr-2"></i>Dashboard
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="mdi mdi-account-outline mr-2"></i>Account
+                            </a>
+                            <hr class="border-gray-200">
+                            <a href="#" class="dropdown-item">
+                                <i class="mdi mdi-logout-variant mr-2"></i>Sign Out
+                            </a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

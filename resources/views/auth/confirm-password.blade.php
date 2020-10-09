@@ -3,8 +3,8 @@
 @section('content')
     <div class="sm:container sm:mx-auto sm:max-w-md sm:my-10">
         <section class="bg-white sm:border-1 sm:rounded-md sm:shadow-lg">
-            <header class="text-center text-2xl bg-gray-200 text-gray-700 py-5 px-6 sm:rounded-t-md">
-                {{ __('Confirm Password') }}
+            <header class="text-center text-2xl bg-green-100 text-green-500 py-5 px-6 sm:rounded-t-md">
+                <i class="mdi mdi-shield-account-outline mr-3"></i>{{ __('Confirm Password') }}
             </header>
 
             <form class="px-5 space-y-5 sm:px-10" method="POST" action="{{ route('password.confirm') }}">
