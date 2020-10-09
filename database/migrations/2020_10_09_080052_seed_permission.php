@@ -1,13 +1,11 @@
 <?php
 
-use Database\Seeders\CategorySeeder;
+use Database\Seeders\PermissionSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class SeedCategory extends Migration
+class SeedPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +15,7 @@ class SeedCategory extends Migration
     public function up()
     {
         Artisan::call('db:seed', [
-            '--class' => CategorySeeder::class,
+            '--class' => PermissionSeeder::class,
             '--force' => 1,
         ]);
     }
@@ -29,6 +27,6 @@ class SeedCategory extends Migration
      */
     public function down()
     {
-        DB::table('categories')->delete();
+        DB::table('permissions')->delete();
     }
 }

@@ -43,14 +43,14 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="#" class="dropdown-item">
-                                    <i class="mdi mdi-speedometer mr-2"></i>Dashboard
+                                    <i class="mdi mdi-eye-outline mr-2"></i>View
                                 </a>
                                 <a href="#" class="dropdown-item">
-                                    <i class="mdi mdi-account-outline mr-2"></i>Account
+                                    <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
                                 </a>
-                                <hr class="border-gray-200">
+                                <hr class="border-gray-200 my-1">
                                 <a href="#" class="dropdown-item">
-                                    <i class="mdi mdi-logout-variant mr-2"></i>Sign Out
+                                    <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
                                 </a>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;

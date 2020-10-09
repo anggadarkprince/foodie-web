@@ -52,21 +52,21 @@
                 </a>
             </li>
             <li>
-                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('groups') || request()->is('users') ? ' bg-green-100' : ' collapsed' }}">
+                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('groups*') || request()->is('users*') ? ' bg-green-100' : ' collapsed' }}">
                     <i class="mdi mdi-lock-outline mr-2 pointer-events-none"></i>
                     {{ __('User Access') }}
                     <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
                 </a>
-                <div id="submenu-user-access" class="sidebar-submenu {{ request()->is('groups') || request()->is('users') ? '' : ' submenu-hide' }}">
+                <div id="submenu-user-access" class="sidebar-submenu {{ request()->is('groups*') || request()->is('users*') ? '' : ' submenu-hide' }}">
                     <ul class="overflow-hidden flex flex-col pl-6 pb-2">
                         <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
+                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups*') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
                                 <i class="mdi mdi-shield-account-outline mr-2"></i>
                                 {{ __('Groups') }}
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('users') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
+                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('users*') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
                                 <i class="mdi mdi-account-multiple-outline mr-2"></i>
                                 {{ __('Users') }}
                                 <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
@@ -199,6 +199,13 @@
             </ul>
         </div>
         <div class="p-4 flex-grow">
+
+            @if (session('status'))
+                <div class="mb-3 {{ session('status') == 'success' ? 'alert-green' : 'alert-orange' }}" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
+
             @yield('content')
         </div>
         <footer class="px-4 py-5 border-t mt-3 text-sm text-gray-600">
