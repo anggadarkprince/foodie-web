@@ -1,9 +1,21 @@
 .button-primary {
-    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-green-100 bg-green-500
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-green-100 bg-green-500;
+    @apply text-center;
+    @apply inline-block;
 }
 
 .button-primary:hover {
     @apply bg-green-600;
+}
+
+.button-blue {
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-blue-100 bg-blue-500;
+    @apply text-center;
+    @apply inline-block;
+}
+
+.button-blue:hover {
+    @apply bg-blue-600;
 }
 
 @screen sm {
@@ -11,4 +23,10 @@
         @apply py-3;
         @apply text-lg;
     }
+}
+
+.button-sm {
+    @apply py-2 px-3;
+    @apply text-sm;
+    @apply rounded;
 }

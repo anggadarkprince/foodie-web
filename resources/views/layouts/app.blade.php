@@ -52,15 +52,15 @@
                 </a>
             </li>
             <li>
-                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 collapsed menu-toggle{{ request()->is('roles') || request()->is('users') ? ' bg-green-100' : '' }}">
+                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('groups') || request()->is('users') ? ' bg-green-100' : ' collapsed' }}">
                     <i class="mdi mdi-lock-outline mr-2 pointer-events-none"></i>
                     {{ __('User Access') }}
                     <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
                 </a>
-                <div id="submenu-user-access" class="sidebar-submenu submenu-hide">
+                <div id="submenu-user-access" class="sidebar-submenu {{ request()->is('groups') || request()->is('users') ? '' : ' submenu-hide' }}">
                     <ul class="overflow-hidden flex flex-col pl-6 pb-2">
                         <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups') ? ' bg-green-100' : '' }}" href="{{ url('groups') }}">
+                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
                                 <i class="mdi mdi-shield-account-outline mr-2"></i>
                                 {{ __('Groups') }}
                             </a>
@@ -182,7 +182,7 @@
                         <button class="dropdown-toggle">
                             {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right show">
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item">
                                 <i class="mdi mdi-speedometer mr-2"></i>Dashboard
                             </a>

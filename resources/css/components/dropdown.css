@@ -12,9 +12,14 @@
     margin-top: 0.5rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    @apply text-left;
     @apply text-gray-700;
     @apply shadow;
     @apply rounded;
+}
+
+.dropdown-toggle i {
+    pointer-events: none;
 }
 
 .dropdown-menu.show {
