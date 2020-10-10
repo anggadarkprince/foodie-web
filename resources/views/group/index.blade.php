@@ -42,16 +42,16 @@
                                 Action <i class="mdi mdi-chevron-down"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item">
+                                <a href="{{ route('admin.groups.show', ['group' => $group->id]) }}" class="dropdown-item">
                                     <i class="mdi mdi-eye-outline mr-2"></i>View
                                 </a>
-                                <a href="#" class="dropdown-item">
+                                <a href="{{ route('admin.groups.edit', ['group' => $group->id]) }}" class="dropdown-item">
                                     <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
                                 </a>
                                 <hr class="border-gray-200 my-1">
-                                <a href="#" class="dropdown-item">
+                                <button type="button" data-href="{{ route('admin.groups.destroy', ['group' => $group->id]) }}" data-label="{{ $group->group }}" class="dropdown-item confirm-delete">
                                     <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </td>
@@ -72,7 +72,7 @@
                 <span class="close dismiss-modal">&times;</span>
                 <h3 class="text-xl">Filters</h3>
             </div>
-            <form action="{{ url()->full() }}" method="get" class="py-3 space-y-4">
+            <form action="{{ url()->full() }}" method="get" class="pt-3 space-y-4">
                 <div class="flex flex-wrap">
                     <label for="q" class="form-label">{{ __('Search') }}</label>
                     <input id="q" type="search" class="form-input"
@@ -80,21 +80,69 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex flex-wrap">
+                        <label for="sort_by" class="form-label">{{ __('Sort By') }}</label>
+                        <div class="relative w-full">
+                            <select class="form-input pr-8" name="sort_by" id="sort_by">
+                                <?php
+                                $sortFields = [
+                                    'created_at' => 'Created At',
+                                    'role' => 'Role',
+                                    'description' => 'Description',
+                                    'total_permission' => 'Total Permission',
+                                ]
+                                ?>
+                                @foreach($sortFields as $sortKey => $sortField)
+                                    <option value="{{ $sortKey }}"{{ request()->get('sort_by') == $sortKey ? 'selected' : '' }}>
+                                        {{ $sortField }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <label for="order_method" class="form-label">{{ __('Order Method') }}</label>
+                        <div class="relative w-full">
+                            <select class="form-input pr-8" name="order_method" id="order_method">
+                                <option value="desc"{{ request()->get('order_method') == 'desc' ? 'selected' : '' }}>
+                                    Descending
+                                </option>
+                                <option value="asc"{{ request()->get('order_method') == 'asc' ? 'selected' : '' }}>
+                                    Ascending
+                                </option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-wrap">
                         <label for="date_from" class="form-label">{{ __('Date From') }}</label>
-                        <input id="date_from" type="search" class="form-input"
+                        <input id="date_from" type="search" class="form-input datepicker"
                                placeholder="Date created since" name="date_from" value="{{ request()->get('date_from') }}">
                     </div>
                     <div class="flex flex-wrap">
                         <label for="date_to" class="form-label">{{ __('Date To') }}</label>
-                        <input id="date_to" type="search" class="form-input"
+                        <input id="date_to" type="search" class="form-input datepicker"
                                placeholder="Date created until" name="date_to" value="{{ request()->get('date_to') }}">
                     </div>
                 </div>
-                <div class="text-right pt-4">
-                    <button type="button" class="button-blue button-sm dismiss-modal">Close</button>
-                    <button type="submit" class="button-primary button-sm">Apply</button>
+                <div class="border-t border-gray-200 text-right pt-4">
+                    <a href="{{ url()->full() }}" class="button-light button-sm dismiss-modal px-5">Reset</a>
+                    <button type="button" class="button-light button-sm dismiss-modal px-5">Close</button>
+                    <button type="submit" class="button-primary button-sm px-5">Apply</button>
                 </div>
             </form>
         </div>
     </div>
+
+    @include('partials.modal-delete')
 @endsection

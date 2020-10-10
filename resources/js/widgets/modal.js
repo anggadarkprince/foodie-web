@@ -5,7 +5,7 @@ window.addEventListener('click', function (event) {
         const targetModal = event.target.dataset.modal;
         const currentModal = document.querySelector(targetModal);
         if (currentModal) {
-            document.querySelector(targetModal).style.display = "block";
+            currentModal.style.display = "block";
             document.body.classList.add('overflow-hidden');
         }
     }

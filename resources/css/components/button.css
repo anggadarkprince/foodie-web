@@ -18,6 +18,36 @@
     @apply bg-blue-600;
 }
 
+.button-red {
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-red-100 bg-red-500;
+    @apply text-center;
+    @apply inline-block;
+}
+
+.button-red:hover {
+    @apply bg-red-600;
+}
+
+.button-orange {
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-orange-100 bg-orange-500;
+    @apply text-center;
+    @apply inline-block;
+}
+
+.button-orange:hover {
+    @apply bg-orange-600;
+}
+
+.button-light {
+    @apply select-none whitespace-no-wrap py-2 px-5 rounded-md text-base leading-normal no-underline text-gray-700 bg-gray-200;
+    @apply text-center;
+    @apply inline-block;
+}
+
+.button-light:hover {
+    @apply bg-gray-300;
+}
+
 @screen sm {
     .button-lg {
         @apply py-3;

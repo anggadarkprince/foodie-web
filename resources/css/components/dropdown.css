@@ -33,7 +33,7 @@
 .dropdown-menu .dropdown-item {
     padding: 5px 17px;
     text-decoration: none;
-    display: block;
+    @apply text-left block w-full;
 }
 
 .dropdown-menu .dropdown-item:hover {

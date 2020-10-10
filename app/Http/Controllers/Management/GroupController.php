@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\SaveGroup;
 use App\Models\Group;
 use App\Models\Permission;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -62,7 +61,7 @@ class GroupController extends Controller
         } catch (Throwable $e) {
             return redirect()->back()->withInput()->with([
                 "status" => "failed",
-                "message" => $e->getMessage()
+                "message" => "Create user group failed"
             ]);
         }
     }
@@ -70,45 +69,87 @@ class GroupController extends Controller
     /**
      * Display the specified group.
      *
-     * @param \App\Models\Group $group
-     * @return Response
+     * @param Group $group
+     * @return View
      */
     public function show(Group $group)
     {
-        //
+        $permissions = $group->permissions->groupBy([
+            'module',
+            function ($item) {
+                return $item['feature'];
+            }
+        ]);
+        return view('group.show', compact('group', 'permissions'));
     }
 
     /**
      * Show the form for editing the specified group.
      *
-     * @param \App\Models\Group $group
-     * @return Response
+     * @param Group $group
+     * @return View
      */
     public function edit(Group $group)
     {
-        //
+        $permissions = Permission::all()->groupBy([
+            'module',
+            function ($item) {
+                return $item['feature'];
+            }
+        ]);
+        return view('group.edit', compact('group', 'permissions'));
     }
 
     /**
      * Update the specified group in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Group $group
-     * @return Response
+     * @param SaveGroup $request
+     * @param Group $group
+     * @return RedirectResponse
      */
-    public function update(Request $request, Group $group)
+    public function update(SaveGroup $request, Group $group)
     {
-        //
+        try {
+            return DB::transaction(function () use ($request, $group) {
+                $group->fill($request->except('permissions'));
+                $group->save();
+
+                $group->permissions()->sync(
+                    $request->input('permissions')
+                );
+
+                return redirect()->route('admin.groups.index')->with([
+                    "status" => "success",
+                    "message" => "Group {$group->group} successfully updated"
+                ]);
+            });
+        } catch (Throwable $e) {
+            return redirect()->back()->withInput()->with([
+                "status" => "failed",
+                "message" => "Update user group failed"
+            ]);
+        }
     }
 
     /**
      * Remove the specified group from storage.
      *
-     * @param \App\Models\Group $group
-     * @return Response
+     * @param Group $group
+     * @return RedirectResponse
      */
     public function destroy(Group $group)
     {
-        //
+        try {
+            $group->delete();
+            return redirect()->route('admin.groups.index')->with([
+                "status" => "warning",
+                "message" => "Group {$group->group} successfully deleted"
+            ]);
+        } catch (Throwable $e) {
+            return redirect()->back()->with([
+                "status" => "failed",
+                "message" => "Delete user group failed"
+            ]);
+        }
     }
 }
