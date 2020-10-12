@@ -52,4 +52,7 @@
         </div>
     </div>
 
+    <div class="bg-white rounded shadow-sm px-6 py-4 mb-4 flex justify-between">
+        <button type="button" onclick="history.back()" class="button-blue button-sm">Back</button>
+    </div>
 @endsection

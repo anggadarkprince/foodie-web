@@ -19,4 +19,6 @@ mix.postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
 ]);
 
+mix.copyDirectory('resources/img', 'public/img');
+
 mix.version();

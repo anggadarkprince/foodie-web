@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->group(function() {
     })->middleware('password.confirm')->name('account');
 
     Route::resources([
-        'groups' => 'Management\GroupController'
+        'groups' => 'Management\GroupController',
+        'users' => 'Management\UserController',
     ]);
 });

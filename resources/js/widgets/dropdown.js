@@ -5,6 +5,18 @@ window.addEventListener('click', function (event) {
         event.stopPropagation();
         event.preventDefault();
 
+        // get dropdown menu
+        const currentDropdownMenu = currentDropdown
+            .closest('.dropdown')
+            .querySelector('.dropdown-menu');
+
+        // close other open dropdowns
+        const openDropdownMenu = document.querySelector('.dropdown-menu.show');
+        if (openDropdownMenu && openDropdownMenu !== currentDropdownMenu) {
+            openDropdownMenu.classList.remove('show');
+        }
+
+        // open current
         currentDropdown
             .closest('.dropdown')
             .querySelector('.dropdown-menu')

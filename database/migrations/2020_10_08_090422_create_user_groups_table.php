@@ -18,8 +18,8 @@ class CreateUserGroupsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('group_id');
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('group_id')->references('id')->on('groups')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

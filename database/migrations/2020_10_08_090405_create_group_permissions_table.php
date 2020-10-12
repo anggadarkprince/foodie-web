@@ -18,8 +18,8 @@ class CreateGroupPermissionsTable extends Migration
             $table->foreignId('group_id');
             $table->foreignId('permission_id');
 
-            $table->foreign('group_id')->references('id')->on('groups');
-            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->foreign('group_id')->references('id')->on('groups')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('permission_id')->references('id')->on('permissions')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
