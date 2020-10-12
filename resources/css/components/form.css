@@ -18,3 +18,8 @@
 .form-text-error {
     @apply text-sm text-red-500 mt-2;
 }
+
+.datepicker:after {
+    content: "x";
+    right: 0;
+}

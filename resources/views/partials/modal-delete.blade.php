@@ -4,7 +4,7 @@
             <span class="close dismiss-modal">&times;</span>
             <h3 class="text-xl delete-title">Delete</h3>
         </div>
-        <form action="{{ url()->full() }}" method="post" class="pt-3">
+        <form action="{{ url()->current() }}" method="post" class="pt-3">
             @csrf
             @method('delete')
             <p class="text-xl">

@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\Permission;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -15,10 +16,18 @@ class GroupController extends Controller
 {
     /**
      * Display a listing of the group.
+     *
+     * @param Request $request
+     * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::paginate();
+        $groups = Group::withCount('permissions as permission_total')
+            ->q($request->get('q'))
+            ->sort($request->get('sort_by'), $request->get('sort_method'))
+            ->dateFrom($request->get('date_from'))
+            ->dateTo($request->get('date_to'))
+            ->paginate();
 
         return view('group.index', compact('groups'));
     }
