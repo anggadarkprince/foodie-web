@@ -14,9 +14,11 @@
                 <a href="{{ url()->full() }}&export=1" class="button-blue button-sm text-center">
                     <i class="mdi mdi-file-download-outline"></i>
                 </a>
-                <a href="{{ route('admin.users.create') }}" class="button-blue button-sm">
-                    Create <i class="mdi mdi-plus-box-outline"></i>
-                </a>
+                @can('create', \App\Models\User::class)
+                    <a href="{{ route('admin.users.create') }}" class="button-blue button-sm">
+                        Create <i class="mdi mdi-plus-box-outline"></i>
+                    </a>
+                @endcan
             </div>
         </div>
         <table class="table-auto w-full mb-4">
@@ -53,16 +55,22 @@
                                 Action <i class="mdi mdi-chevron-down"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="{{ route('admin.users.show', ['user' => $user->id]) }}" class="dropdown-item">
-                                    <i class="mdi mdi-eye-outline mr-2"></i>View
-                                </a>
-                                <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="dropdown-item">
-                                    <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
-                                </a>
-                                <hr class="border-gray-200 my-1">
-                                <button type="button" data-href="{{ route('admin.users.destroy', ['user' => $user->id]) }}" data-label="{{ $user->name }}" class="dropdown-item confirm-delete">
-                                    <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
-                                </button>
+                                @can('view', $user)
+                                    <a href="{{ route('admin.users.show', ['user' => $user->id]) }}" class="dropdown-item">
+                                        <i class="mdi mdi-eye-outline mr-2"></i>View
+                                    </a>
+                                @endcan
+                                @can('update', $user)
+                                    <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="dropdown-item">
+                                        <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
+                                    </a>
+                                @endcan
+                                @can('delete', $user)
+                                    <hr class="border-gray-200 my-1">
+                                    <button type="button" data-href="{{ route('admin.users.destroy', ['user' => $user->id]) }}" data-label="{{ $user->name }}" class="dropdown-item confirm-delete">
+                                        <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
+                                    </button>
+                                @endcan
                             </div>
                         </div>
                     </td>

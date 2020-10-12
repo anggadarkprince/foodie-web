@@ -90,6 +90,35 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the permissions of the user.
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePermissions(Builder $query)
+    {
+        return $query
+            ->select([
+                'permissions.permission',
+                'permissions.description',
+            ])
+            ->distinct()
+            ->join('user_groups', 'user_groups.user_id', '=', 'users.id')
+            ->join('groups', 'groups.id', '=', 'user_groups.group_id')
+            ->join('group_permissions', 'group_permissions.group_id', '=', 'groups.id')
+            ->join('permissions', 'permissions.id', '=', 'group_permissions.permission_id');
+    }
+
+    /**
+     * Get the permissions of the user.
+     * @param Builder $query
+     * @param $permission
+     * @return Builder
+     */
+    public function scopeHasPermissionTo(Builder $query, $permission) {
+        return $this->scopePermissions($query)->where('permission', Permission::GROUP_VIEW)->get()->count();
+    }
+
+    /**
      * Scope a query to only include user that match the query.
      *
      * @param Builder $query

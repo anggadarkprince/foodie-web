@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     return view('home.index');
 })->middleware(['auth', 'verified']);
 
-Route::middleware(['auth', 'verified'])->name('admin.')->group(function() {
+Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')->group(function() {
     Route::get('dashboard', function () {
         return view('home.index');
     })->name('dashboard');

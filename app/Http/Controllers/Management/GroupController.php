@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\SaveGroup;
 use App\Models\Group;
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,15 @@ use Throwable;
 
 class GroupController extends Controller
 {
+
+    /**
+     * GroupController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Group::class);
+    }
+
     /**
      * Display a listing of the group.
      *

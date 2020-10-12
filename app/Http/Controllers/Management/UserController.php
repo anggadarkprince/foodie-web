@@ -16,6 +16,15 @@ use Throwable;
 
 class UserController extends Controller
 {
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
     /**
      * Display a listing of the user.
      *

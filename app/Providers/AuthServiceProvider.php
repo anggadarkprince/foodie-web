@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Group;
+use App\Models\User;
+use App\Policies\GroupPolicy;
+use App\Policies\UserPolicy;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -14,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        Group::class => GroupPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -25,6 +31,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('access-dashboard', function ($user) {
+            return $user->type == User::TYPE_MANAGEMENT
+                ? Response::allow()
+                : Response::deny('You must be a management member.');
+        });
 
         Passport::routes(function ($router) {
             $router->forAccessTokens();
