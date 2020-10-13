@@ -57,76 +57,105 @@
                     {{ __('User Access') }}
                     <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
                 </a>
-                <div id="submenu-user-access" class="sidebar-submenu {{ request()->is('groups*') || request()->is('users*') ? '' : ' submenu-hide' }}">
-                    <ul class="overflow-hidden flex flex-col pl-6 pb-2">
-                        <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('groups*') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
-                                <i class="mdi mdi-shield-account-outline mr-2"></i>
-                                {{ __('Groups') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('users*') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
-                                <i class="mdi mdi-account-multiple-outline mr-2"></i>
-                                {{ __('Users') }}
-                                <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
-                                    12
-                                </span>
-                            </a>
-                        </li>
+                <div id="submenu-user-access" class="sidebar-submenu{{ request()->is('groups*') || request()->is('users*') ? '' : ' submenu-hide' }}">
+                    <ul class="overflow-hidden flex flex-col pb-2">
+                        @can('view-any', \App\Models\Group::class)
+                            <li>
+                                <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('groups*') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
+                                    <i class="mdi mdi-shield-account-outline mr-2"></i>
+                                    {{ __('Groups') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view-any', \App\Models\User::class)
+                            <li>
+                                <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('users*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                    <i class="mdi mdi-account-multiple-outline mr-2"></i>
+                                    {{ __('Users') }}
+                                    <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
+                                        12
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
-            <li>
-                <a href="#submenu-foodie" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle">
-                    <i class="mdi mdi-package-variant mr-2 pointer-events-none"></i>
-                    {{ __('Foodie') }}
-                    <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
-                </a>
-                <div id="submenu-foodie" class="sidebar-submenu">
-                    <ul class="overflow-hidden flex flex-col pl-6 pb-2">
-                        <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('categories') ? ' bg-green-100' : '' }}" href="{{ url('roles') }}">
-                                <i class="mdi mdi-cube-outline mr-2"></i>
-                                {{ __('Categories') }}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('restaurant') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
-                                <i class="mdi mdi-storefront-outline mr-2"></i>
-                                {{ __('Restaurant') }}
-                                <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">
-                                    56
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="flex items-center py-1 px-5 hover:bg-green-100{{ request()->is('cuisines') ? ' bg-green-100' : '' }}" href="{{ url('users') }}">
-                                <i class="mdi mdi-food-apple-outline mr-2"></i>
-                                {{ __('Cuisines') }}
-                                <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">
-                                    34
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('orders') ? ' bg-green-100' : '' }}" href="{{ route('admin.dashboard') }}">
-                    <i class="mdi mdi-clipboard-file-outline mr-2"></i>
-                    {{ __('Orders') }}
-                </a>
-            </li>
+
+            @if(request()->user()->can('view-any', \App\Models\Category::class)
+                || request()->user()->can('view-any', \App\Models\Restaurant::class)
+                || request()->user()->can('view-any', \App\Models\Cuisine::class))
+                <li>
+                    <a href="#submenu-foodie" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('categories*') || request()->is('restaurants*') || request()->is('cuisines*') ? ' bg-green-100' : ' collapsed' }}">
+                        <i class="mdi mdi-package-variant mr-2 pointer-events-none"></i>
+                        {{ __('Foodie') }}
+                        <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
+                    </a>
+                    <div id="submenu-foodie" class="sidebar-submenu{{ request()->is('categories*') || request()->is('restaurants*') || request()->is('cuisines*') ? '' : ' submenu-hide' }}">
+                        <ul class="overflow-hidden flex flex-col pb-2">
+                            @can('view-any', \App\Models\Category::class)
+                                <li>
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('categories*') ? ' text-green-500' : '' }}" href="{{ route('admin.categories.index') }}">
+                                        <i class="mdi mdi-cube-outline mr-2"></i>
+                                        {{ __('Categories') }}
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-any', \App\Models\Restaurant::class)
+                                <li>
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('restaurants*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                        <i class="mdi mdi-storefront-outline mr-2"></i>
+                                        {{ __('Restaurant') }}
+                                        <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">
+                                            56
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-any', \App\Models\Cuisine::class)
+                                <li>
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('cuisines*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                        <i class="mdi mdi-food-apple-outline mr-2"></i>
+                                        {{ __('Cuisines') }}
+                                        <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">
+                                            34
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
+            @can('view-any', \App\Models\Order::class)
+                <li>
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('orders') ? ' text-green-500' : '' }}" href="{{ route('admin.dashboard') }}">
+                        <i class="mdi mdi-clipboard-file-outline mr-2"></i>
+                        {{ __('Orders') }}
+                    </a>
+                </li>
+            @endcan
+
             <li class="flex items-center py-2 px-5 text-xs text-gray-400">
                 {{ __('PREFERENCES') }} <i class="mdi mdi-arrow-right ml-auto"></i>
             </li>
-            <li>
-                <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('account') ? ' bg-green-100' : '' }}" href="{{ route('admin.account') }}">
-                    <i class="mdi mdi-account-reactivate-outline mr-2"></i>
-                    {{ __('Account') }}
-                </a>
-            </li>
+            @can('edit-account', \App\Models\User::class)
+                <li>
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('account') ? ' text-green-500' : '' }}" href="{{ route('admin.account') }}">
+                        <i class="mdi mdi-account-reactivate-outline mr-2"></i>
+                        {{ __('Account') }}
+                    </a>
+                </li>
+            @endcan
+            @cannot('setting', \App\Models\User::class)
+                <li>
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('setting') ? ' text-green-500' : '' }}" href="{{ route('admin.account') }}">
+                        <i class="mdi mdi-cog-outline mr-2"></i>
+                        {{ __('Setting') }}
+                    </a>
+                </li>
+            @endcan
             @auth
                 <li>
                     <a class="flex items-center py-2 px-5 hover:bg-green-100 cursor-pointer"

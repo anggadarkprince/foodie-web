@@ -8,7 +8,7 @@
                 <h1 class="text-xl">Create User</h1>
                 <span class="text-gray-400">Manage all user account</span>
             </div>
-            <div>
+            <div class="pt-2">
                 <div class="sm:flex -mx-2">
                     <div class="px-2 sm:w-1/2">
                         <div class="flex flex-wrap mb-3 sm:mb-4">

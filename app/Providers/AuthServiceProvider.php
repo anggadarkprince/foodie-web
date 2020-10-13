@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\Group;
 use App\Models\User;
+use App\Policies\CategoryPolicy;
 use App\Policies\GroupPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\Response;
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Group::class => GroupPolicy::class,
         User::class => UserPolicy::class,
+        Category::class => CategoryPolicy::class,
     ];
 
     /**

@@ -8,21 +8,21 @@
         </div>
         <div class="grid sm:grid-cols-2 gap-4">
             <div>
-                <div class="flex mb-1">
+                <div class="flex mb-2">
                     <p class="w-1/3">Group Name</p>
                     <p class="text-gray-600">{{ $group->group }}</p>
                 </div>
-                <div class="flex mb-1">
+                <div class="flex mb-2">
                     <p class="w-1/3">Description</p>
                     <p class="text-gray-600">{{ $group->description }}</p>
                 </div>
             </div>
             <div>
-                <div class="flex mb-1">
+                <div class="flex mb-2">
                     <p class="w-1/3">Created At</p>
                     <p class="text-gray-600">{{ $group->created_at->format('d F Y H:i') ?: '-' }}</p>
                 </div>
-                <div class="flex mb-1">
+                <div class="flex mb-2">
                     <p class="w-1/3">Updated At</p>
                     <p class="text-gray-600">{{ empty($group->updated_at) ? '-' : $group->updated_at->format('d F Y H:i') }}</p>
                 </div>

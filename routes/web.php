@@ -33,5 +33,6 @@ Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')-
     Route::resources([
         'groups' => 'Management\GroupController',
         'users' => 'Management\UserController',
+        'categories' => 'Management\CategoryController',
     ]);
 });

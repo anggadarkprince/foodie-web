@@ -91,6 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the permissions of the user.
+     *
      * @param Builder $query
      * @return Builder
      */
@@ -109,13 +110,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the permissions of the user.
+     * Check the permissions is owned by user.
+     *
      * @param Builder $query
      * @param $permission
-     * @return Builder
+     * @return int
      */
-    public function scopeHasPermissionTo(Builder $query, $permission) {
-        return $this->scopePermissions($query)->where('permission', Permission::GROUP_VIEW)->get()->count();
+    public function scopeHasPermission(Builder $query, $permission) {
+        $hasPermission = $this->scopePermissions($query)->where('permission', $permission)->get();
+
+        return $hasPermission->count() > 0;
     }
 
     /**

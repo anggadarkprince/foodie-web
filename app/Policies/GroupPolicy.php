@@ -19,7 +19,7 @@ class GroupPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo(Permission::GROUP_VIEW);
+        return $user->hasPermission(Permission::GROUP_VIEW);
     }
 
     /**
@@ -42,7 +42,7 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo(Permission::GROUP_CREATE);
+        return $user->hasPermission(Permission::GROUP_CREATE);
     }
 
     /**
@@ -54,7 +54,7 @@ class GroupPolicy
      */
     public function update(User $user, Group $group)
     {
-        return $user->hasPermissionTo(Permission::GROUP_EDIT);
+        return $user->hasPermission(Permission::GROUP_EDIT);
     }
 
     /**
@@ -66,7 +66,7 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group)
     {
-        return $user->hasPermissionTo(Permission::GROUP_DELETE);
+        return $user->hasPermission(Permission::GROUP_DELETE);
     }
 
     /**
@@ -78,7 +78,7 @@ class GroupPolicy
      */
     public function restore(User $user, Group $group)
     {
-        return $user->hasPermissionTo(Permission::GROUP_DELETE);
+        return $user->hasPermission(Permission::GROUP_DELETE);
     }
 
     /**
@@ -90,6 +90,6 @@ class GroupPolicy
      */
     public function forceDelete(User $user, Group $group)
     {
-        return $user->hasPermissionTo(Permission::GROUP_DELETE);
+        return $user->hasPermission(Permission::GROUP_DELETE);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Category;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -18,17 +19,17 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermission(Permission::USER_VIEW);
+        return $user->hasPermission(Permission::CATEGORY_VIEW);
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param User $user
-     * @param User $model
+     * @param Category $category
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user, Category $category)
     {
         return $this->viewAny($user);
     }
@@ -41,65 +42,54 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermission(Permission::USER_CREATE);
+        return $user->hasPermission(Permission::CATEGORY_CREATE);
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param User $model
+     * @param Category $category
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user, Category $category)
     {
-        return $user->hasPermission(Permission::USER_EDIT);
+        return $user->hasPermission(Permission::CATEGORY_EDIT);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param User $model
+     * @param Category $category
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Category $category)
     {
-        return $user->hasPermission(Permission::USER_DELETE);
+        return $user->hasPermission(Permission::CATEGORY_DELETE);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param User $user
-     * @param User $model
+     * @param Category $category
      * @return mixed
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Category $category)
     {
-        return $this->delete($user, $model);
+        return $this->delete($user, $category);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param User $user
-     * @param User $model
+     * @param Category $category
      * @return mixed
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Category $category)
     {
-        return $this->delete($user, $model);
-    }
-
-    /**
-     * Determine whether the user can edit their account.
-     *
-     * @param User $user
-     * @return mixed
-     */
-    public function editAccount(User $user)
-    {
-        return $user->hasPermission(Permission::ACCOUNT_EDIT);
+        return $this->delete($user, $category);
     }
 }

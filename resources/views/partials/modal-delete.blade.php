@@ -8,7 +8,7 @@
             @csrf
             @method('delete')
             <p class="text-xl">
-                Are you sure want to delete <span class="delete-label"></span>?
+                Are you sure want to delete <span class="delete-label text-red-500"></span>?
             </p>
             <p class="mb-4 text-gray-400 text-sm">
                 All related data could be deleted and this action might be irreversible.

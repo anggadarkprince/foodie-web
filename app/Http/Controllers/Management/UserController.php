@@ -136,7 +136,7 @@ class UserController extends Controller
                     $request->merge(['password' => bcrypt($input)]);
                 });
 
-                if (empty($request->input('password'))) {
+                if ($request->isNotFilled('password')) {
                     $request->request->remove('password');
                 }
 

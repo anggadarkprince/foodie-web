@@ -6,10 +6,10 @@
         @method('put')
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-2">
-                <h1 class="text-xl">Create User</h1>
+                <h1 class="text-xl">Edit User</h1>
                 <span class="text-gray-400">Manage all user account</span>
             </div>
-            <div>
+            <div class="pt-2">
                 <div class="sm:flex -mx-2">
                     <div class="px-2 sm:w-1/2">
                         <div class="flex flex-wrap mb-3 sm:mb-4">
