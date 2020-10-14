@@ -22,7 +22,7 @@ class Category extends Model
      */
     public function getIconAttribute(string $value)
     {
-        return empty($value) ? $value : Storage::disk('public')->url($value);
+        return empty($value) ? url('/img/no-image.png') : Storage::disk('public')->url($value);
     }
 
     /**

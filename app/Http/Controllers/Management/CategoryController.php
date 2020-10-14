@@ -107,8 +107,9 @@ class CategoryController extends Controller
     public function update(SaveCategory $request, Category $category)
     {
         try {
-            if ($request->filled('icon')) {
-                $uploadedIcon = $request->file('icon')->storePublicly('categories', 'public');
+            $file = $request->file('icon');
+            if (!empty($file)) {
+                $uploadedIcon = $file->storePublicly('categories', 'public');
                 $request->merge(['icon' => $uploadedIcon]);
 
                 if (!empty($category['icon'])) {

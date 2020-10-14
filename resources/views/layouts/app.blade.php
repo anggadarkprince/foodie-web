@@ -103,7 +103,7 @@
                             @endcan
                             @can('view-any', \App\Models\Restaurant::class)
                                 <li>
-                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('restaurants*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('restaurants*') ? ' text-green-500' : '' }}" href="{{ route('admin.restaurants.index') }}">
                                         <i class="mdi mdi-storefront-outline mr-2"></i>
                                         {{ __('Restaurant') }}
                                         <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">

@@ -123,6 +123,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Scope a query to only include customer user.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeCustomer(Builder $query)
+    {
+        return $query->where('users.type', self::TYPE_CUSTOMER);
+    }
+
+    /**
      * Scope a query to only include user that match the query.
      *
      * @param Builder $query
