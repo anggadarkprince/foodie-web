@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Storage;
 class Restaurant extends Model
 {
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'restaurants.id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -70,6 +77,18 @@ class Restaurant extends Model
     }
 
     /**
+     * Get a new query builder instance for the connection.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function newBaseQueryBuilder()
+    {
+        return parent::newBaseQueryBuilder()
+            ->select('restaurants.*')
+            ->join('users', 'users.id', 'restaurants.user_id');
+    }
+
+    /**
      * Scope a query to only include group that match the query.
      *
      * @param Builder $query
@@ -84,9 +103,12 @@ class Restaurant extends Model
         return $query->where(function (Builder $query) use ($q) {
             $query->where('restaurants.name', 'LIKE', '%' . $q . '%');
             $query->orWhere('restaurants.address', 'LIKE', '%' . $q . '%');
+            $query->orWhere('users.name', 'LIKE', '%' . $q . '%');
+            /*
             $query->orWhereHas('user', function (Builder $query) use ($q) {
                 $query->where('name', 'LIKE', '%' . $q . '%');
             });
+            */
         });
     }
 
