@@ -53,7 +53,7 @@
                 <span class="text-gray-400">Choose photo of restaurant</span>
             </div>
             <div class="flex pb-3 input-file-wrapper">
-                <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select avatar" aria-label="Image">
+                <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select image" aria-label="Image">
                 <div class="relative">
                     <input class="input-file button-primary absolute block hidden top-0" type="file" name="image" id="image" accept="image/*">
                     <label for="image" class="button-choose-file button-primary py-3 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">

@@ -63,7 +63,7 @@ class RestaurantController extends Controller
 
             $file = $request->file('image');
             if (!empty($file)) {
-                $uploadPath = 'restaurant/' . date('Ym');
+                $uploadPath = 'restaurants/' . date('Ym');
                 $path = $file->storePublicly($uploadPath, 'public');
                 $restaurantInput['image'] = $path;
             }
@@ -120,7 +120,7 @@ class RestaurantController extends Controller
 
             $file = $request->file('image');
             if (!empty($file)) {
-                $uploadPath = 'restaurant/' . date('Ym');
+                $uploadPath = 'restaurants/' . date('Ym');
                 $path = $file->storePublicly($uploadPath, 'public');
                 $restaurantInput['image'] = $path;
 

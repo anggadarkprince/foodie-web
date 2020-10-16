@@ -16,7 +16,7 @@ class Restaurant extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'restaurants.id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -104,11 +104,6 @@ class Restaurant extends Model
             $query->where('restaurants.name', 'LIKE', '%' . $q . '%');
             $query->orWhere('restaurants.address', 'LIKE', '%' . $q . '%');
             $query->orWhere('users.name', 'LIKE', '%' . $q . '%');
-            /*
-            $query->orWhereHas('user', function (Builder $query) use ($q) {
-                $query->where('name', 'LIKE', '%' . $q . '%');
-            });
-            */
         });
     }
 

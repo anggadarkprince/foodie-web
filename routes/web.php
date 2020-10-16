@@ -35,5 +35,6 @@ Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')-
         'users' => 'Management\UserController',
         'categories' => 'Management\CategoryController',
         'restaurants' => 'Management\RestaurantController',
+        'cuisines' => 'Management\CuisineController',
     ]);
 });

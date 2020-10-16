@@ -114,7 +114,7 @@
                             @endcan
                             @can('view-any', \App\Models\Cuisine::class)
                                 <li>
-                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('cuisines*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('cuisines*') ? ' text-green-500' : '' }}" href="{{ route('admin.cuisines.index') }}">
                                         <i class="mdi mdi-food-apple-outline mr-2"></i>
                                         {{ __('Cuisines') }}
                                         <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">

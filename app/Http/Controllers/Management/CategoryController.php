@@ -15,7 +15,7 @@ class CategoryController extends Controller
 {
 
     /**
-     * UserController constructor.
+     * CategoryController constructor.
      */
     public function __construct()
     {
