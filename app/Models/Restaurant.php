@@ -77,13 +77,14 @@ class Restaurant extends Model
     }
 
     /**
-     * Get a new query builder instance for the connection.
+     * Get a new query builder instance for scope.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @param Builder $query
+     * @return Builder
      */
-    protected function newBaseQueryBuilder()
+    protected function scopeBaseQuery(Builder $query)
     {
-        return parent::newBaseQueryBuilder()
+        return $query
             ->select('restaurants.*')
             ->join('users', 'users.id', 'restaurants.user_id');
     }

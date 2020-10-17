@@ -6,3 +6,4 @@ require('./widgets/datepicker');
 require('./widgets/input-file');
 require('./widgets/input-numeric');
 require('./modules/delete');
+require('./modules/restaurant-map');

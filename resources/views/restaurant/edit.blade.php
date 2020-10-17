@@ -67,9 +67,41 @@
             </div>
             @error('image') <p class="form-text-error">{{ $message }}</p> @enderror
         </div>
+        <div class="bg-white rounded shadow-sm px-6 py-6 mb-4">
+            <div id="restaurant-map" style="height: 400px" class="sticky-marker mb-4" data-lng="{{ old('lng', $restaurant->lng) }}" data-lat="{{ old('lat', $restaurant->lat) }}"></div>
+            <div class="sm:flex -mx-2">
+                <div class="px-2 sm:w-1/2">
+                    <div class="flex flex-wrap mb-3 sm:mb-4">
+                        <label for="lng" class="form-label">{{ __('Longitude') }}</label>
+                        <input id="lng" type="text" class="form-input @error('lng') border-red-500 @enderror"
+                               placeholder="Longitude" name="lng" readonly value="{{ old('lng', $restaurant->lng) }}">
+                        @error('lng') <p class="form-text-error">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+                <div class="px-2 sm:w-1/2">
+                    <div class="flex flex-wrap mb-3 sm:mb-4">
+                        <label for="lat" class="form-label">{{ __('Latitude') }}</label>
+                        <input id="lat" type="text" class="form-input @error('lat') border-red-500 @enderror"
+                               placeholder="Latitude" name="lat" readonly value="{{ old('lat', $restaurant->lat) }}">
+                        @error('lat') <p class="form-text-error">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap mb-2">
+                <label for="location" class="form-label">{{ __('Location') }}</label>
+                <textarea id="location" type="text" class="form-input @error('location') border-red-500 @enderror"
+                          placeholder="Map location" name="location" rows="2">{{ old('location') }}</textarea>
+                @error('location') <p class="form-text-error">{{ $message }}</p> @enderror
+            </div>
+        </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4 flex justify-between">
             <button type="button" onclick="history.back()" class="button-blue button-sm">Back</button>
             <button type="submit" class="button-orange button-sm">Update Restaurant</button>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg4esaS2P9dXK7ApOBTdXcnfBy2heCKhw&callback=initMap"></script>
 @endsection

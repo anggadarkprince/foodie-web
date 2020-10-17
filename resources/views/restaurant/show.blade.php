@@ -33,7 +33,9 @@
                 <div class="flex mb-2">
                     <p class="w-1/3">Location</p>
                     <p class="text-gray-600">
-                        <a href="#" class="text-link">Show in Map</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ $restaurant->lat }},{{ $restaurant->lng }}" class="text-link" target="_blank">
+                            Show in Map
+                        </a>
                     </p>
                 </div>
                 <div class="flex mb-2">

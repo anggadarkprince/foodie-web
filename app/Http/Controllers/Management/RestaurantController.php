@@ -29,7 +29,8 @@ class RestaurantController extends Controller
      */
     public function index(Request $request)
     {
-        $restaurants = Restaurant::q($request->get('q'))
+        $restaurants = Restaurant::baseQuery()
+            ->q($request->get('q'))
             ->sort($request->get('sort_by'), $request->get('sort_method'))
             ->dateFrom($request->get('date_from'))
             ->dateTo($request->get('date_to'))
@@ -59,16 +60,14 @@ class RestaurantController extends Controller
     public function store(SaveRestaurant $request)
     {
         try {
-            $restaurantInput = $request->validated();
-
             $file = $request->file('image');
             if (!empty($file)) {
                 $uploadPath = 'restaurants/' . date('Ym');
                 $path = $file->storePublicly($uploadPath, 'public');
-                $restaurantInput['image'] = $path;
+                $request->merge(['image' => $path]);
             }
 
-            $restaurant = Restaurant::create($restaurantInput);
+            $restaurant = Restaurant::create($request->input());
 
             return redirect()->route('admin.restaurants.index')->with([
                 "status" => "success",
@@ -116,21 +115,19 @@ class RestaurantController extends Controller
     public function update(SaveRestaurant $request, Restaurant $restaurant)
     {
         try {
-            $restaurantInput = $request->validated();
-
             $file = $request->file('image');
             if (!empty($file)) {
                 $uploadPath = 'restaurants/' . date('Ym');
                 $path = $file->storePublicly($uploadPath, 'public');
-                $restaurantInput['image'] = $path;
+                $request->merge(['image' => $path]);
 
                 // delete old file
-                if (!empty($restaurant['image'])) {
-                    Storage::disk('public')->delete($restaurant['image']);
+                if (!empty($restaurant->image)) {
+                    Storage::disk('public')->delete($restaurant->image);
                 }
             }
 
-            $restaurant->fill($restaurantInput);
+            $restaurant->fill($request->input());
             $restaurant->save();
 
             return redirect()->route('admin.restaurants.index')->with([

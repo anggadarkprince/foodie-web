@@ -31,6 +31,8 @@ class SaveRestaurant extends FormRequest
             'name' => ['required', 'max:50'],
             'address' => ['required', 'max:500', 'string'],
             'image' => ['nullable', 'image', 'max:2000', 'dimensions:min_width=250'],
+            'lat' => ['required', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
+            'lng' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
         ];
     }
 
@@ -43,6 +45,8 @@ class SaveRestaurant extends FormRequest
     {
         return [
             'user_id' => 'Owner',
+            'lat' => 'Latitude',
+            'lng' => 'Longitude',
         ];
     }
 
