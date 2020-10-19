@@ -11,23 +11,16 @@ use Illuminate\Http\Request;
 class AccountController extends Controller
 {
     /**
-     * AccountController constructor.
-     *
-     * @throws AuthorizationException
-     */
-    public function __construct()
-    {
-        $this->authorize('edit-account', User::class);
-    }
-
-    /**
      * Show account information form.
      *
      * @param Request $request
      * @return View
+     * @throws AuthorizationException
      */
     public function index(Request $request)
     {
+        $this->authorize('edit-account', User::class);
+
         return view('account.index', ['user' => $request->user()]);
     }
 }

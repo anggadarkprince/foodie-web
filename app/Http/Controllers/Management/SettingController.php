@@ -16,22 +16,15 @@ use Throwable;
 class SettingController extends Controller
 {
     /**
-     * SettingController constructor.
-     *
-     * @throws AuthorizationException
-     */
-    public function __construct()
-    {
-        $this->authorize('edit-setting', Setting::class);
-    }
-
-    /**
      * Show setting form.
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function index()
     {
+        $this->authorize('edit-setting', Setting::class);
+
         $groups = Group::all();
 
         return view('setting.index', compact('groups'));
@@ -43,9 +36,12 @@ class SettingController extends Controller
      * @param Request $request
      * @return RedirectResponse
      * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function update(Request $request)
     {
+        $this->authorize('edit-setting', Setting::class);
+
         $rules = [
             Setting::APP_TITLE => ['required'],
             Setting::APP_TAGLINE => ['required'],

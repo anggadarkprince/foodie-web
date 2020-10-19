@@ -17,7 +17,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/icon.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="antialiased">
 <div class="flex bg-gray-100 text-gray-700" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-white flex flex-col min-h-screen shadow-sm" id="sidebar-wrapper" style="transition: margin .15s ease-in-out;">
