@@ -49,18 +49,18 @@
             </div>
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
-            <div class="mb-2">
+            <div class="mb-4">
                 <h1 class="text-xl">Avatar</h1>
                 <span class="text-gray-400">Choose photo of user</span>
             </div>
             <div class="sm:flex items-center pb-3 input-file-wrapper">
-                <div class="bg-gray-400 h-32 w-32 inline-block mr-4 mb-3 sm:mb-0 rounded-md flex-shrink-0">
-                    <img class="object-cover h-20 w-20 rounded-md" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                <div class="bg-gray-400 inline-block mr-4 mb-3 sm:mb-0 rounded-md flex-shrink-0">
+                    <img class="object-cover h-32 w-32 rounded-md" id="image-avatar" src="{{ $user->avatar }}" alt="{{ $user->name }}">
                 </div>
                 <div class="flex w-full">
                     <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select avatar" aria-label="Avatar">
                     <div class="relative">
-                        <input class="input-file button-primary absolute block hidden top-0" type="file" name="avatar" id="avatar" accept="image/*">
+                        <input class="input-file button-primary absolute block hidden top-0" data-target-preview="#image-avatar" type="file" name="avatar" id="avatar" accept="image/*">
                         <label for="avatar" class="button-choose-file button-primary py-2 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">
                             Choose File
                         </label>

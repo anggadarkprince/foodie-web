@@ -85,17 +85,17 @@
             </div>
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
-            <div class="mb-2">
+            <div class="mb-4">
                 <h1 class="text-xl">Image</h1>
                 <span class="text-gray-400">Choose photo of food</span>
             </div>
             <div class="flex items-center pb-3 input-file-wrapper">
-                <div class="bg-gray-400 h-20 w-20 inline-block mr-2 rounded-md flex-shrink-0">
-                    <img class="object-cover h-20 w-20 rounded-md" src="{{ $cuisine->image }}" alt="{{ $cuisine->cuisine }}">
+                <div class="bg-gray-400 inline-block mr-2 rounded-md flex-shrink-0">
+                    <img class="object-cover h-32 w-32 rounded-md" id="image-photo" src="{{ $cuisine->image }}" alt="{{ $cuisine->cuisine }}">
                 </div>
                 <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select image" aria-label="Image">
                 <div class="relative">
-                    <input class="input-file button-primary absolute block hidden top-0" type="file" name="image" id="image" accept="image/*">
+                    <input class="input-file button-primary absolute block hidden top-0" data-target-preview="#image-photo" type="file" name="image" id="image" accept="image/*">
                     <label for="image" class="button-choose-file button-primary py-2 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">
                         Replace Image
                     </label>

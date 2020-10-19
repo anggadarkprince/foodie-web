@@ -7,6 +7,18 @@ inputFiles.forEach(inputFile => {
                 const inputFileWrapper = inputWrapper.querySelector('.input-file-label');
                 inputFileWrapper.value = this.files[0].name;
             }
+
+            // set preview file (image)
+            if (this.dataset.targetPreview) {
+                const targetPreview = document.querySelector(this.dataset.targetPreview);
+                if (targetPreview) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        targetPreview.setAttribute('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            }
         }
     });
 })

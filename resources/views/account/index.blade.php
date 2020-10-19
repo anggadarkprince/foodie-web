@@ -11,17 +11,23 @@
                     <span class="text-gray-400 block mb-3">Edit name and email</span>
                 </div>
                 <div class="px-2 sm:w-2/3">
-                    <div class="flex flex-wrap mb-3 sm:mb-4">
-                        <label for="name" class="form-label">{{ __('Name') }}</label>
-                        <input id="name" type="text" class="form-input @error('name') border-red-500 @enderror"
-                               name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" placeholder="Your full name">
-                        <p class="form-text-error">{{ $errors->updateProfileInformation->first('name') }}</p>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                        <input id="email" type="email" class="form-input @error('email') border-red-500 @enderror" name="email"
-                               value="{{ old('email', $user->email) }}" required autocomplete="email" placeholder="Email address">
-                        <p class="form-text-error">{{ $errors->updateProfileInformation->first('email') }}</p>
+                    <div class="sm:flex -mx-2">
+                        <div class="px-2 sm:w-1/2">
+                            <div class="flex flex-wrap">
+                                <label for="name" class="form-label">{{ __('Name') }}</label>
+                                <input id="name" type="text" class="form-input @error('name') border-red-500 @enderror"
+                                       name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" placeholder="Your full name">
+                                <p class="form-text-error">{{ $errors->updateProfileInformation->first('name') }}</p>
+                            </div>
+                        </div>
+                        <div class="px-2 sm:w-1/2">
+                            <div class="flex flex-wrap">
+                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                <input id="email" type="email" class="form-input @error('email') border-red-500 @enderror" name="email"
+                                       value="{{ old('email', $user->email) }}" required autocomplete="email" placeholder="Email address">
+                                <p class="form-text-error">{{ $errors->updateProfileInformation->first('email') }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,15 +41,15 @@
                 </div>
                 <div class="px-2 sm:w-2/3">
                     <div class="sm:flex items-center input-file-wrapper text-center">
-                        <div class="bg-gray-400 h-32 w-32 inline-block mr-4 mb-3 sm:mb-0 rounded-md flex-shrink-0">
+                        <div class="bg-gray-400 inline-block mr-4 mb-3 sm:mb-0 rounded-md flex-shrink-0">
                             <a href="{{ url($user->avatar) }}">
-                                <img class="object-cover rounded-md" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                                <img class="h-32 w-32 object-cover rounded-md" id="image-avatar" src="{{ $user->avatar }}" alt="{{ $user->name }}">
                             </a>
                         </div>
                         <div class="flex w-full">
                             <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Pick new avatar" aria-label="Avatar">
                             <div class="relative">
-                                <input class="input-file button-primary absolute block hidden top-0" type="file" name="avatar" id="avatar" accept="image/*">
+                                <input class="input-file button-primary absolute block hidden top-0" data-target-preview="#image-avatar" type="file" name="avatar" id="avatar" accept="image/*">
                                 <label for="avatar" class="button-choose-file button-primary py-2 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">
                                     Choose Image
                                 </label>

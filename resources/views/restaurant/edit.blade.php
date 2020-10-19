@@ -49,17 +49,17 @@
             </div>
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
-            <div class="mb-2">
+            <div class="mb-4">
                 <h1 class="text-xl">Image</h1>
                 <span class="text-gray-400">Choose photo of restaurant</span>
             </div>
             <div class="flex items-center pb-3 input-file-wrapper">
-                <div class="bg-gray-400 h-20 w-20 inline-block mr-2 rounded-md flex-shrink-0">
-                    <img class="object-cover h-20 w-20 rounded-md" src="{{ $restaurant->image }}" alt="{{ $restaurant->name }}">
+                <div class="bg-gray-400 inline-block mr-2 rounded-md flex-shrink-0">
+                    <img class="object-cover h-32 w-32 rounded-md" id="image-photo" src="{{ $restaurant->image }}" alt="{{ $restaurant->name }}">
                 </div>
                 <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select image" aria-label="Image">
                 <div class="relative">
-                    <input class="input-file button-primary absolute block hidden top-0" type="file" name="image" id="image" accept="image/*">
+                    <input class="input-file button-primary absolute block hidden top-0" data-target-preview="#image-photo" type="file" name="image" id="image" accept="image/*">
                     <label for="image" class="button-choose-file button-primary py-2 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">
                         Replace Image
                     </label>
@@ -73,7 +73,7 @@
                 <div class="px-2 sm:w-1/2">
                     <div class="flex flex-wrap mb-3 sm:mb-4">
                         <label for="lng" class="form-label">{{ __('Longitude') }}</label>
-                        <input id="lng" type="text" class="form-input @error('lng') border-red-500 @enderror"
+                        <input id="lng" type="text" class="form-input readonly:text-gray-700 @error('lng') border-red-500 @enderror"
                                placeholder="Longitude" name="lng" readonly value="{{ old('lng', $restaurant->lng) }}">
                         @error('lng') <p class="form-text-error">{{ $message }}</p> @enderror
                     </div>
@@ -90,7 +90,7 @@
             <div class="flex flex-wrap mb-2">
                 <label for="location" class="form-label">{{ __('Location') }}</label>
                 <textarea id="location" type="text" class="form-input @error('location') border-red-500 @enderror"
-                          placeholder="Map location" name="location" rows="2">{{ old('location') }}</textarea>
+                          placeholder="Map location" name="location" rows="2" readonly>{{ old('location') }}</textarea>
                 @error('location') <p class="form-text-error">{{ $message }}</p> @enderror
             </div>
         </div>

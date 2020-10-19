@@ -25,17 +25,17 @@
             </div>
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
-            <div class="mb-2">
+            <div class="mb-4">
                 <h1 class="text-xl">Icon</h1>
                 <span class="text-gray-400">Choose icon of category</span>
             </div>
             <div class="flex items-center py-3 input-file-wrapper">
-                <div class="bg-gray-400 h-20 w-20 inline-block mr-2 rounded-md flex-shrink-0">
-                    <img class="object-cover h-20 w-20 rounded-md" src="{{ $category->icon }}" alt="{{ $category->category }}">
+                <div class="bg-gray-400 inline-block mr-4 rounded-md flex-shrink-0">
+                    <img class="object-cover h-20 w-20 rounded-md" id="image-icon" src="{{ $category->icon }}" alt="{{ $category->category }}">
                 </div>
                 <input type="text" readonly class="form-input input-file-label rounded-tr-none rounded-br-none" placeholder="Select icon" aria-label="Icon">
                 <div class="relative">
-                    <input class="input-file button-primary absolute block hidden top-0" type="file" name="icon" id="icon" accept="image/*">
+                    <input class="input-file button-primary absolute block hidden top-0" data-target-preview="#image-icon" type="file" name="icon" id="icon" accept="image/*">
                     <label for="icon" class="button-choose-file button-primary py-2 px-4 rounded-tl-none rounded-bl-none border border-transparent cursor-pointer">
                         Replace Icon
                     </label>
