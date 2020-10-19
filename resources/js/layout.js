@@ -52,3 +52,21 @@ if (openSubmenus) {
     })
 }
 
+const searchPlaceholder = document.getElementById('search-placeholder');
+const inputNavbarSearch = document.getElementById('input-navbar-search');
+searchPlaceholder.addEventListener('click', function () {
+    this.classList.add('hidden');
+    inputNavbarSearch.classList.remove('hidden');
+    setTimeout(function() {
+        inputNavbarSearch.classList.add('max-w-md');
+        inputNavbarSearch.classList.add('opacity-100');
+    });
+    inputNavbarSearch.focus();
+});
+
+inputNavbarSearch.addEventListener('focusout', function () {
+    this.classList.add('hidden');
+    this.classList.remove('max-w-md');
+    this.classList.remove('opacity-100');
+    searchPlaceholder.classList.remove('hidden');
+});

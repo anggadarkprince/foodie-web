@@ -186,10 +186,14 @@
     <div id="content-wrapper" class="flex flex-col w-full min-h-screen h-full">
         <div class="flex items-center px-4 py-2 bg-green-500 text-white sm:h-16">
             <i class="mdi mdi-menu text-xl sm:text-2xl py-1 cursor-pointer sidebar-toggle"></i>
-            <div class="align-middle ml-4 opacity-50">
+            <div class="ml-4 opacity-50 select-none" id="search-placeholder">
                 <i class="mdi mdi-magnify text-md mr-1"></i>
                 <span class="hidden sm:inline-block">Search over the app...</span>
             </div>
+            <form action="search" class="flex flex-grow w-auto">
+                <input type="search" class="form-input border-none rounded-full ml-4 transition-all duration-500 ease-in-out max-w-sm opacity-0 hidden" id="input-navbar-search"
+                       placeholder="Search over the app..." aria-label="Search">
+            </form>
             <ul class="list-none ml-auto">
                 <li class="inline-block py-2 px-3 cursor-pointer relative">
                     <i class="mdi mdi-message-outline text-xl"></i>
