@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('maintenance.frontend')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
-
-Route::get('/dashboard', function () {
-    return view('home.index');
-})->middleware(['auth', 'verified']);
 
 Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')->group(function() {
     Route::get('dashboard', 'Management\DashboardController@index')->name('dashboard');

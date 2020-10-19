@@ -52,14 +52,16 @@
                         {{ __('Login') }}
                     </button>
 
-                    @if (Route::has('register'))
-                        <p class="w-full block text-center text-gray-700 mt-6 mb-8 sm:text-sm">
+                    <p class="w-full block text-center text-gray-700 mt-6 mb-8 sm:text-sm">
+                        @if (Route::has('register') && app_setting(\App\Models\Setting::MANAGEMENT_REGISTRATION))
                             {{ __("Don't have an account?") }}
                             <a class="text-link" href="{{ route('register') }}">
                                 {{ __('Register') }}
                             </a>
-                        </p>
-                    @endif
+                        @else
+                            &copy {{ date('Y') }} Copyright all rights reserved
+                        @endif
+                    </p>
                 </div>
             </form>
 

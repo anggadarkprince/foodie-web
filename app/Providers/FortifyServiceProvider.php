@@ -8,6 +8,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Http\Responses\PasswordResetResponse;
 use App\Http\Responses\RegisterResponse;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\PasswordResetResponse as PasswordResetResponseContract;
@@ -45,6 +46,13 @@ class FortifyServiceProvider extends ServiceProvider
             $email = $request->get('email');
             $token = $request->token;
             return view('auth.reset-password', compact('email', 'token'));
+        });
+        Fortify::registerView(function (Request $request) {
+            if (app_setting(Setting::MANAGEMENT_REGISTRATION)) {
+                return view('auth.register');
+            } else {
+                abort('403');
+            }
         });
 
     }
