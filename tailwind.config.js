@@ -18,7 +18,8 @@ module.exports = {
     extend: {},
   },
   variants: {
-      textColor: ['responsive', 'hover', 'focus', 'group-hover'],
+      opacity: ['responsive', 'hover', 'focus', 'disabled'],
+      textColor: ['responsive', 'hover', 'focus', 'group-hover', 'disabled'],
   },
   plugins: [],
 }

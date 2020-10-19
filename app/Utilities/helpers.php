@@ -45,3 +45,18 @@ if (!function_exists('extract_number')) {
         return $value == '' ? $default : $value;
     }
 }
+
+if (!function_exists('app_setting')) {
+
+    /**
+     * Get application setting by passing value.
+     *
+     * @param $key
+     * @param $default
+     * @return null|string|string[]
+     */
+    function app_setting($key, $default = '')
+    {
+        return \App\Models\Setting::item($key, $default);
+    }
+}

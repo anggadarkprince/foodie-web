@@ -27,7 +27,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::directive('numeric', function ($number) {
-            return "<?php echo number_format($number, 0, ',', '.'); ?>";
+            return "<?php echo numeric($number); ?>";
+        });
+        Blade::directive('setting', function ($arguments) {
+            eval("\$params = [$arguments];");
+            list($key, $default) = $params;
+            return "<?php echo app_setting('$key', '$default'); ?>";
         });
     }
 }
