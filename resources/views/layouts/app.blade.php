@@ -145,7 +145,7 @@
                     </a>
                 </li>
             @endcan
-            @cannot('setting', \App\Models\User::class)
+            @can('edit-setting', \App\Models\Setting::class)
                 <li>
                     <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('settings') ? ' text-green-500' : '' }}" href="{{ route('admin.settings') }}">
                         <i class="mdi mdi-cog-outline mr-2"></i>

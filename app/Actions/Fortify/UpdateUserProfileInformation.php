@@ -20,6 +20,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        if (!$user->can('edit-account', User::class)) {
+            abort(403);
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:50', Rule::unique('users')->ignore($user->id)],

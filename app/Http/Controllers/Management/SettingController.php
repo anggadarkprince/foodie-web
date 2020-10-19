@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Setting;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,16 @@ use Throwable;
 
 class SettingController extends Controller
 {
+    /**
+     * SettingController constructor.
+     *
+     * @throws AuthorizationException
+     */
+    public function __construct()
+    {
+        $this->authorize('edit-setting', Setting::class);
+    }
+
     /**
      * Show setting form.
      *

@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Group;
 use App\Models\Restaurant;
+use App\Models\Setting;
 use App\Models\User;
 use App\Policies\CategoryPolicy;
 use App\Policies\GroupPolicy;
 use App\Policies\RestaurantPolicy;
+use App\Policies\SettingPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -27,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Category::class => CategoryPolicy::class,
         Restaurant::class => RestaurantPolicy::class,
+        Setting::class => SettingPolicy::class,
     ];
 
     /**

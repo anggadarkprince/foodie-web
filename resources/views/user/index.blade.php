@@ -47,7 +47,7 @@
                     </td>
                     <td class="px-4 py-1">{{ $user->email }}</td>
                     <td class="px-4 py-1">{{ $user->type ?: '-' }}</td>
-                    <td class="px-4 py-1">{{ $user->groups->implode('<br>') ?: '-' }}</td>
+                    <td class="px-4 py-1">{!! $user->groups->pluck('group')->implode('<br>') ?: '-' !!}</td>
                     <td class="px-4 py-1">{{ $user->created_at->format('d M Y H:i') }}</td>
                     <td class="px-4 py-1 text-right">
                         <div class="dropdown">

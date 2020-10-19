@@ -149,6 +149,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $query->where('users.name', 'LIKE', '%' . $q . '%');
             $query->orWhere('users.email', 'LIKE', '%' . $q . '%');
             $query->orWhere('users.type', 'LIKE', '%' . $q . '%');
+            $query->orWhereHas('groups', function (Builder $query) use ($q) {
+                $query->where('group', 'LIKE', '%' . $q . '%');
+            });
         });
     }
 
