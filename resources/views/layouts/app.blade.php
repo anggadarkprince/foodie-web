@@ -147,9 +147,9 @@
             @endcan
             @cannot('setting', \App\Models\User::class)
                 <li>
-                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('setting') ? ' text-green-500' : '' }}" href="{{ route('admin.account') }}">
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('settings') ? ' text-green-500' : '' }}" href="{{ route('admin.settings') }}">
                         <i class="mdi mdi-cog-outline mr-2"></i>
-                        {{ __('Setting') }}
+                        {{ __('Settings') }}
                     </a>
                 </li>
             @endcan
@@ -209,16 +209,20 @@
                             {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">
+                            <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
                                 <i class="mdi mdi-speedometer mr-2"></i>Dashboard
                             </a>
-                            <a href="#" class="dropdown-item">
-                                <i class="mdi mdi-account-outline mr-2"></i>Account
-                            </a>
-                            <hr class="border-gray-200">
-                            <a class="dropdown-item cursor-pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="mdi mdi-logout-variant mr-2"></i>Sign Out
-                            </a>
+                            @can('edit-account', \App\Models\User::class)
+                                <a href="{{ route('admin.account') }}" class="dropdown-item">
+                                    <i class="mdi mdi-account-outline mr-2"></i>Account
+                                </a>
+                            @endcan
+                            @auth
+                                <hr class="border-gray-200">
+                                <a class="dropdown-item cursor-pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="mdi mdi-logout-variant mr-2"></i>Sign Out
+                                </a>
+                            @endauth
                         </div>
                     </div>
                 </li>

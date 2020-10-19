@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4 text-right">
-            <button type="submit" class="button-primary w-full sm:w-auto">{{ __('Update') }}</button>
+            <button type="submit" class="button-primary w-full sm:w-auto">{{ __('Update') }} {{ __('Account') }}</button>
         </div>
     </form>
 @endsection

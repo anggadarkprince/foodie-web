@@ -22,13 +22,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified']);
 
 Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')->group(function() {
-    Route::get('dashboard', function () {
-        return view('home.index');
-    })->name('dashboard');
+    Route::get('dashboard', 'Management\DashboardController@index')->name('dashboard');
 
-    Route::get('account', function () {
-        return view('account.index', ['user' => request()->user()]);
-    })->middleware('password.confirm')->name('account');
+    Route::middleware('password.confirm')->group(function() {
+        Route::get('account', 'Management\AccountController@index')->name('account');
+        Route::get('settings', 'Management\SettingController@index')->name('settings');
+        Route::put('settings', 'Management\SettingController@update')->name('settings.update');
+    });
 
     Route::resources([
         'groups' => 'Management\GroupController',
