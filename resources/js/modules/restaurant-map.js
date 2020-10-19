@@ -3,7 +3,7 @@ const inputLng = document.getElementById('lng');
 const inputLocation = document.getElementById('location');
 const restaurantMap = document.getElementById('restaurant-map');
 let map, geocoder, infoWindow;
-let centerLoc = {lat: Number(restaurantMap.dataset.lat || -7.250445), lng: Number(restaurantMap.dataset.lng || 112.768845)};
+let centerLoc = {lat: Number(restaurantMap?.dataset.lat || -7.250445), lng: Number(restaurantMap?.dataset.lng || 112.768845)};
 
 // Initialize and add the map
 function initMap() {

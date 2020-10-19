@@ -30,8 +30,8 @@
         <ul class="overflow-hidden list-none flex flex-col flex-auto pb-5" style="width: 245px">
             <li class="mt-2">
                 <a href="{{ route('admin.account') }}" class="flex items-center py-2 px-5 group">
-                    <img src="http://sso.transcon-indonesia.local/assets/dist/img/no-avatar.png"
-                         alt="avatar" class="rounded-full h-12 w-12">
+                    <img src="{{ url(auth()->user()->avatar) }}"
+                         alt="avatar" class="rounded-full object-cover h-12 w-12">
                     <div class="flex flex-col truncate ml-3">
                         <p class="group-hover:text-green-500">{{ auth()->user()->name }}</p>
                         <small class="text-gray-500 text-opacity-75 text-truncate group-hover:text-gray-400">{{ auth()->user()->email }}</small>
@@ -158,7 +158,7 @@
                     <a class="flex items-center py-2 px-5 hover:bg-green-100 cursor-pointer"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="mdi mdi-logout-variant mr-2"></i>
-                        {{ __('Logout') }}
+                        {{ __('Sign out') }}
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                         {{ csrf_field() }}
@@ -216,7 +216,7 @@
                                 <i class="mdi mdi-account-outline mr-2"></i>Account
                             </a>
                             <hr class="border-gray-200">
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item cursor-pointer" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="mdi mdi-logout-variant mr-2"></i>Sign Out
                             </a>
                         </div>
@@ -228,7 +228,7 @@
 
             @if (session('status'))
                 <div class="mb-3 {{ session('status') == 'success' ? 'alert-green' : 'alert-orange' }}" role="alert">
-                    {{ session('message') }}
+                    {{ session('message') ?: ucfirst(preg_replace('/(_|\-)/', ' ', session('status'))) }}
                 </div>
             @endif
 
