@@ -84,6 +84,8 @@ class UserController extends Controller
 
                 $user->groups()->attach($userInput['groups']);
 
+                $user->sendEmailVerificationNotification();
+
                 return redirect()->route('admin.users.index')->with([
                     "status" => "success",
                     "message" => "User {$user->name} successfully created"

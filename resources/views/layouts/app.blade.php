@@ -69,9 +69,11 @@
                                 <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('users*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
                                     <i class="mdi mdi-account-multiple-outline mr-2"></i>
                                     {{ __('Users') }}
-                                    <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
-                                        12
-                                    </span>
+                                    @if($_totalNewCustomer > 0)
+                                        <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
+                                            {{ $_totalNewCustomer }}
+                                        </span>
+                                    @endif
                                 </a>
                             </li>
                         @endcan
@@ -103,9 +105,11 @@
                                     <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('restaurants*') ? ' text-green-500' : '' }}" href="{{ route('admin.restaurants.index') }}">
                                         <i class="mdi mdi-storefront-outline mr-2"></i>
                                         {{ __('Restaurant') }}
-                                        <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">
-                                            56
-                                        </span>
+                                        @if($_totalNewRestaurant > 0)
+                                            <span class="ml-auto text-xs text-white uppercase bg-blue-500 px-1 rounded-sm">
+                                                {{ $_totalNewRestaurant }}
+                                            </span>
+                                        @endif
                                     </a>
                                 </li>
                             @endcan
@@ -114,9 +118,11 @@
                                     <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('cuisines*') ? ' text-green-500' : '' }}" href="{{ route('admin.cuisines.index') }}">
                                         <i class="mdi mdi-food-apple-outline mr-2"></i>
                                         {{ __('Cuisines') }}
-                                        <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">
-                                            34
-                                        </span>
+                                        @if($_totalNewCuisine > 0)
+                                            <span class="ml-auto text-xs text-white uppercase bg-green-500 px-1 rounded-sm">
+                                                {{ $_totalNewCuisine }}
+                                            </span>
+                                        @endif
                                     </a>
                                 </li>
                             @endcan
