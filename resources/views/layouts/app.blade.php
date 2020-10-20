@@ -131,9 +131,18 @@
                 </li>
             @endif
 
+            @can('view-any', \App\Models\Courier::class)
+                <li>
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('couriers*') ? ' text-green-500' : '' }}" href="{{ route('admin.couriers.index') }}">
+                        <i class="mdi mdi-truck-delivery-outline mr-2"></i>
+                        {{ __('Couriers') }}
+                    </a>
+                </li>
+            @endcan
+
             @can('view-any', \App\Models\Order::class)
                 <li>
-                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('orders') ? ' text-green-500' : '' }}" href="{{ route('admin.dashboard') }}">
+                    <a class="flex items-center py-2 px-5 hover:bg-green-100{{ request()->is('orders*') ? ' text-green-500' : '' }}" href="{{ route('admin.dashboard') }}">
                         <i class="mdi mdi-clipboard-file-outline mr-2"></i>
                         {{ __('Orders') }}
                     </a>

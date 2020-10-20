@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\Courier;
 use App\Models\Group;
 use App\Models\Restaurant;
 use App\Models\Setting;
 use App\Models\User;
 use App\Policies\CategoryPolicy;
+use App\Policies\CourierPolicy;
 use App\Policies\GroupPolicy;
 use App\Policies\RestaurantPolicy;
 use App\Policies\SettingPolicy;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Category::class => CategoryPolicy::class,
         Restaurant::class => RestaurantPolicy::class,
+        Courier::class => CourierPolicy::class,
         Setting::class => SettingPolicy::class,
     ];
 

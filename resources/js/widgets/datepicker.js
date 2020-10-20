@@ -31,6 +31,12 @@ if (datePickers) {
         if (datePicker.dataset.parentEl) {
             options.parentEl = datePicker.dataset.parentEl;
         }
+        if (datePicker.dataset.startDate) {
+            options.startDate = datePicker.dataset.startDate;
+        }
+        if (datePicker.dataset.endDate) {
+            options.endDate = datePicker.dataset.endDate;
+        }
         const picker = new Litepicker(options);
 
         if (datePicker.dataset.clearButton) {

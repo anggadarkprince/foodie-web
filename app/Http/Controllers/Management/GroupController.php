@@ -48,7 +48,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all()->groupBy([
+        $permissions = Permission::orderBy('module')->orderBy('feature')->get()->groupBy([
             'module',
             function ($item) {
                 return $item['feature'];
@@ -111,7 +111,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        $permissions = Permission::all()->groupBy([
+        $permissions = Permission::orderBy('module')->orderBy('feature')->get()->groupBy([
             'module',
             function ($item) {
                 return $item['feature'];

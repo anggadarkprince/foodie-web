@@ -19,6 +19,10 @@ Route::middleware('maintenance.frontend')->group(function () {
     });
 });
 
+Route::get('/email/courier-verify/{id}/{hash}', 'Management\CourierController@verify')
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('courier.verify');
+
 Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')->group(function() {
     Route::get('dashboard', 'Management\DashboardController@index')->name('dashboard');
 
@@ -34,5 +38,6 @@ Route::middleware(['auth', 'verified', 'can:access-dashboard'])->name('admin.')-
         'categories' => 'Management\CategoryController',
         'restaurants' => 'Management\RestaurantController',
         'cuisines' => 'Management\CuisineController',
+        'couriers' => 'Management\CourierController',
     ]);
 });

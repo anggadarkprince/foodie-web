@@ -187,12 +187,12 @@ class UserController extends Controller
 
             return redirect()->route('admin.users.index')->with([
                 "status" => "warning",
-                "message" => "Group {$user->group} successfully deleted"
+                "message" => "User {$user->group} successfully deleted"
             ]);
         } catch (Throwable $e) {
             return redirect()->back()->with([
                 "status" => "failed",
-                "message" => $e->getMessage()
+                "message" => "Delete user failed"
             ]);
         }
     }

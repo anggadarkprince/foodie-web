@@ -17,8 +17,8 @@
                 </div>
                 <div class="flex flex-wrap mb-3 sm:mb-4">
                     <label for="description" class="form-label">{{ __('Description') }}</label>
-                    <textarea id="description" type="text" class="form-input @error('description') border-red-500 @enderror"
-                              placeholder="Group description" name="description">{{ old('description') }}</textarea>
+                    <textarea id="description" name="description" class="form-input @error('description') border-red-500 @enderror"
+                              placeholder="Category description">{{ old('description') }}</textarea>
                     @error('description') <p class="form-text-error">{{ $message }}</p> @enderror
                 </div>
             </div>

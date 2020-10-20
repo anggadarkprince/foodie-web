@@ -21,7 +21,7 @@
                     </div>
                     <div class="px-2 sm:w-1/2">
                         <div class="flex flex-wrap mb-3 sm:mb-4">
-                            <label for="email" class="form-label">{{ __('Email address') }}</label>
+                            <label for="email" class="form-label">{{ __('Email Address') }}</label>
                             <input id="email" type="email" class="form-input @error('email') border-red-500 @enderror"
                                    placeholder="Email address" name="email" value="{{ old('email', $user->email) }}">
                             @error('email') <p class="form-text-error">{{ $message }}</p> @enderror
