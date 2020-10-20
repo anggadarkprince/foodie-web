@@ -31,10 +31,10 @@
             <li class="mt-2">
                 <a href="{{ route('admin.account') }}" class="flex items-center py-2 px-5 group">
                     <img src="{{ url(auth()->user()->avatar) }}"
-                         alt="avatar" class="rounded-full object-cover h-12 w-12">
+                         alt="avatar" class="rounded-full object-cover h-12 w-12 flex-shrink-0">
                     <div class="flex flex-col truncate ml-3">
                         <p class="group-hover:text-green-500">{{ auth()->user()->name }}</p>
-                        <small class="text-gray-500 text-opacity-75 text-truncate group-hover:text-gray-400">{{ auth()->user()->email }}</small>
+                        <small class="text-gray-500 text-opacity-75 truncate group-hover:text-gray-400">{{ auth()->user()->email }}</small>
                     </div>
                 </a>
             </li>
@@ -48,38 +48,40 @@
                     {{ __('Dashboard') }}
                 </a>
             </li>
-            <li>
-                <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('groups*') || request()->is('users*') ? ' bg-green-100' : ' collapsed' }}">
-                    <i class="mdi mdi-lock-outline mr-2 pointer-events-none"></i>
-                    {{ __('User Access') }}
-                    <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
-                </a>
-                <div id="submenu-user-access" class="sidebar-submenu{{ request()->is('groups*') || request()->is('users*') ? '' : ' submenu-hide' }}">
-                    <ul class="overflow-hidden flex flex-col pb-2">
-                        @can('view-any', \App\Models\Group::class)
-                            <li>
-                                <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('groups*') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
-                                    <i class="mdi mdi-shield-account-outline mr-2"></i>
-                                    {{ __('Groups') }}
-                                </a>
-                            </li>
-                        @endcan
-                        @can('view-any', \App\Models\User::class)
-                            <li>
-                                <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('users*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
-                                    <i class="mdi mdi-account-multiple-outline mr-2"></i>
-                                    {{ __('Users') }}
-                                    @if($_totalNewCustomer > 0)
-                                        <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
-                                            {{ $_totalNewCustomer }}
-                                        </span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </div>
-            </li>
+            @if(request()->user()->can('view-any', \App\Models\Group::class) || request()->user()->can('view-any', \App\Models\User::class))
+                <li>
+                    <a href="#submenu-user-access" class="flex items-center py-2 px-5 hover:bg-green-100 menu-toggle{{ request()->is('groups*') || request()->is('users*') ? ' bg-green-100' : ' collapsed' }}">
+                        <i class="mdi mdi-lock-outline mr-2 pointer-events-none"></i>
+                        {{ __('User Access') }}
+                        <i class="mdi mdi-chevron-down ml-auto pointer-events-none menu-arrow"></i>
+                    </a>
+                    <div id="submenu-user-access" class="sidebar-submenu{{ request()->is('groups*') || request()->is('users*') ? '' : ' submenu-hide' }}">
+                        <ul class="overflow-hidden flex flex-col pb-2">
+                            @can('view-any', \App\Models\Group::class)
+                                <li>
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('groups*') ? ' text-green-500' : '' }}" href="{{ url('groups') }}">
+                                        <i class="mdi mdi-shield-account-outline mr-2"></i>
+                                        {{ __('Groups') }}
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-any', \App\Models\User::class)
+                                <li>
+                                    <a class="flex items-center py-1 pl-12 pr-5 hover:bg-green-100{{ request()->is('users*') ? ' text-green-500' : '' }}" href="{{ url('users') }}">
+                                        <i class="mdi mdi-account-multiple-outline mr-2"></i>
+                                        {{ __('Users') }}
+                                        @if($_totalNewCustomer > 0)
+                                            <span class="ml-auto text-xs text-white uppercase bg-red-500 px-1 rounded-sm">
+                                                {{ $_totalNewCustomer }}
+                                            </span>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
             @if(request()->user()->can('view-any', \App\Models\Category::class)
                 || request()->user()->can('view-any', \App\Models\Restaurant::class)

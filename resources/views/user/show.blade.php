@@ -36,15 +36,15 @@
                 </div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Last Logged In</p>
-                    <p class="text-gray-600">{{ empty($user->last_logged_in) ? '-' : $user->last_logged_in->format('d F Y H:i:s') }}</p>
+                    <p class="text-gray-600">{{ optional($user->last_logged_in)->format('d F Y H:i:s') ?: '-' }}</p>
                 </div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Created At</p>
-                    <p class="text-gray-600">{{ $user->created_at->format('d F Y H:i') ?: '-' }}</p>
+                    <p class="text-gray-600">{{ optional($user->created_at)->format('d F Y H:i') ?: '-' }}</p>
                 </div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Updated At</p>
-                    <p class="text-gray-600">{{ empty($user->updated_at) ? '-' : $user->updated_at->format('d F Y H:i') }}</p>
+                    <p class="text-gray-600">{{ optional($user->updated_at)->format('d F Y H:i') ?: '-' }}</p>
                 </div>
             </div>
         </div>

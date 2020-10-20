@@ -26,8 +26,8 @@
     @forelse ($couriers as $index => $courier)
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-2">
             <div class="flex flex-row items-center -mr-2">
-                <div class="h-24 w-24 flex-shrink-0 inline-block mr-4 rounded-md">
-                    <img class="object-cover rounded-md" src="{{ $courier->photo }}" alt="{{ $courier->name }}">
+                <div class="flex-shrink-0 inline-block mr-4 rounded-md">
+                    <img class="object-cover rounded-md h-24 w-24" src="{{ $courier->photo }}" alt="{{ $courier->name }}">
                 </div>
                 <div class="sm:flex sm:flex-row sm:flex-grow sm:items-center sm:-mx-2">
                     <div class="flex flex-col truncate sm:px-2 sm:w-1/3">

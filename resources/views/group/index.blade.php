@@ -39,7 +39,7 @@
                     <td class="px-4 py-1">{{ $group->group }}</td>
                     <td class="px-4 py-1">{{ $group->permission_total }}</td>
                     <td class="px-4 py-1">{{ $group->description ?: '-' }}</td>
-                    <td class="px-4 py-1">{{ $group->created_at->format('d F Y H:i') }}</td>
+                    <td class="px-4 py-1">{{ optional($group->created_at)->format('d F Y H:i') }}</td>
                     <td class="px-4 py-1 text-right">
                         <div class="dropdown">
                             <button class="dropdown-toggle button-primary button-sm">

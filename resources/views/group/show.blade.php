@@ -20,11 +20,11 @@
             <div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Created At</p>
-                    <p class="text-gray-600">{{ $group->created_at->format('d F Y H:i') ?: '-' }}</p>
+                    <p class="text-gray-600">{{ optional($group->created_at)->format('d F Y H:i') ?: '-' }}</p>
                 </div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Updated At</p>
-                    <p class="text-gray-600">{{ empty($group->updated_at) ? '-' : $group->updated_at->format('d F Y H:i') }}</p>
+                    <p class="text-gray-600">{{ optional($group->updated_at)->format('d F Y H:i') ?: '-' }}</p>
                 </div>
             </div>
         </div>
