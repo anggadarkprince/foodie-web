@@ -18,11 +18,11 @@
                 </div>
                 <div class="flex mb-2">
                     <p class="w-1/3">Icon</p>
-                    <p class="text-gray-600">
+                    <div class="text-gray-600">
                         <div class="bg-gray-400 h-20 w-20 inline-block mr-2 rounded-md">
                             <img class="object-cover h-20 w-20 rounded-md" src="{{ $category->icon }}" alt="{{ $category->icon }}">
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
             <div>
