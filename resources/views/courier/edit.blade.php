@@ -50,7 +50,7 @@
                         <div class="flex flex-wrap mb-3 sm:mb-4">
                             <label for="date_of_birth" class="form-label">{{ __('Date of Birth') }}</label>
                             <input id="date_of_birth" name="date_of_birth" type="text" class="form-input datepicker @error('date_of_birth') border-red-500 @enderror"
-                                   placeholder="Date of birth" autocomplete="off" value="{{ old('date_of_birth', $courier->date_of_birth->format('d F Y')) }}"
+                                   placeholder="Date of birth" autocomplete="off" value="{{ old('date_of_birth', optional($courier->date_of_birth)->format('d F Y')) }}"
                                    data-min-date="{{ \Carbon\Carbon::now()->subYears(50)->format('Y-m-d') }}"
                                    data-max-date="{{ \Carbon\Carbon::now()->subYears(18)->format('Y-m-d')  }}"
                                    data-start-date="{{ \Carbon\Carbon::now()->subYears(18)->format('Y-m-d')  }}">

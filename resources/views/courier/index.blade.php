@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white rounded shadow px-6 py-4">
-        <div class="flex justify-between items-center mb-3">
+    <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
+        <div class="flex justify-between items-center">
             <div>
-                <h1 class="text-xl">Couriers</h1>
+                <h1 class="text-xl text-green-500">Couriers</h1>
                 <span class="text-gray-400">Food delivery man</span>
             </div>
             <div>
                 <button class="button-blue button-sm modal-toggle" data-modal="#modal-filter">
-                    <i class="mdi mdi-filter-variant"></i>
+                    <i class="mdi mdi-tune-vertical-variant"></i>
                 </button>
                 <a href="{{ url()->full() }}&export=1" class="button-blue button-sm text-center">
                     <i class="mdi mdi-file-download-outline"></i>
@@ -21,66 +21,70 @@
                 @endcan
             </div>
         </div>
-        <table class="table-auto w-full mb-4">
-            <thead>
-            <tr>
-                <th class="border-b border-t px-4 py-2 w-12">No</th>
-                <th class="border-b border-t px-4 py-2 text-left">Courier</th>
-                <th class="border-b border-t px-4 py-2 text-left">Email</th>
-                <th class="border-b border-t px-4 py-2 text-left">Vehicle</th>
-                <th class="border-b border-t px-4 py-2 text-right">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @forelse ($couriers as $index => $courier)
-                <tr class="{{ $index % 2 == 0 ? 'bg-gray-100' : '' }}">
-                    <td class="px-4 py-1 text-center">{{ $index + 1 }}</td>
-                    <td class="px-4 py-1">
-                        <div class="flex items-center my-1">
-                            <div class="h-10 w-10 inline-block mr-2 rounded-md">
-                                <img class="object-cover h-10 w-10 rounded-md" src="{{ $courier->photo }}" alt="{{ $courier->name }}">
-                            </div>
-                            {{ $courier->name }}
+    </div>
+
+    @forelse ($couriers as $index => $courier)
+        <div class="bg-white rounded shadow-sm px-6 py-4 mb-2">
+            <div class="flex flex-row items-center sm:flex sm:-mx-2">
+                <div class="h-24 w-24 flex-shrink-0 inline-block mr-4 rounded-md">
+                    <img class="object-cover rounded-md" src="{{ $courier->photo }}" alt="{{ $courier->name }}">
+                </div>
+                <div class="sm:flex sm:flex-row sm:flex-grow sm:items-center sm:-mx-2">
+                    <div class="flex flex-col truncate sm:px-2 sm:w-1/3">
+                        <p class="text-green-500 text-lg">{{ $courier->name }}</p>
+                        <p class="text-gray-500 text-sm truncate">{{ $courier->email ?: '-' }}</p>
+                    </div>
+                    <div class="flex flex-row sm:flex-col sm:px-2 sm:w-1/3">
+                        <p class="mr-2">{{ $courier->vehicle_type }}</p>
+                        <p class="text-gray-500">{{ $courier->vehicle_plat }}</p>
+                    </div>
+                    <div class="sm:px-2 sm:w-1/3">
+                        IDR @numeric($courier->balance)
+                    </div>
+                </div>
+                <div class="sm:px-2 sm:w-1/6 hidden sm:block">
+                    @if(empty($courier->email_verified_at))
+                        <span class="bg-red-500 text-white text-xs py-1 px-2 rounded">UNVERIFIED</span>
+                    @else
+                        <small class="bg-green-500 text-white text-xs py-1 px-2 rounded">VERIFIED</small>
+                    @endif
+                </div>
+                <div class="sm:px-2 ml-auto sm:text-right">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle button-primary button-sm">
+                            Action <i class="mdi mdi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @can('view', $courier)
+                                <a href="{{ route('admin.couriers.show', ['courier' => $courier->id]) }}" class="dropdown-item">
+                                    <i class="mdi mdi-eye-outline mr-2"></i>View
+                                </a>
+                            @endcan
+                            @can('update', $courier)
+                                <a href="{{ route('admin.couriers.edit', ['courier' => $courier->id]) }}" class="dropdown-item">
+                                    <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
+                                </a>
+                            @endcan
+                            @can('delete', $courier)
+                                <hr class="border-gray-200 my-1">
+                                <button type="button"
+                                        data-href="{{ route('admin.couriers.destroy', ['courier' => $courier->id]) }}"
+                                        data-label="{{ $courier->name }}" class="dropdown-item confirm-delete">
+                                    <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
+                                </button>
+                            @endcan
                         </div>
-                    </td>
-                    <td class="px-4 py-1">{{ $courier->email ?: '-' }}</td>
-                    <td class="px-4 py-1">
-                        <p>{{ $courier->vehicle_type }}</p>
-                        <small class="text-gray-500">{{ $courier->vehicle_plat }}</small>
-                    </td>
-                    <td class="px-4 py-1 text-right">
-                        <div class="dropdown">
-                            <button class="dropdown-toggle button-primary button-sm">
-                                Action <i class="mdi mdi-chevron-down"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                @can('view', $courier)
-                                    <a href="{{ route('admin.couriers.show', ['courier' => $courier->id]) }}" class="dropdown-item">
-                                        <i class="mdi mdi-eye-outline mr-2"></i>View
-                                    </a>
-                                @endcan
-                                @can('update', $courier)
-                                    <a href="{{ route('admin.couriers.edit', ['courier' => $courier->id]) }}" class="dropdown-item">
-                                        <i class="mdi mdi-square-edit-outline mr-2"></i>Edit
-                                    </a>
-                                @endcan
-                                @can('delete', $courier)
-                                    <hr class="border-gray-200 my-1">
-                                    <button type="button" data-href="{{ route('admin.couriers.destroy', ['courier' => $courier->id]) }}" data-label="{{ $courier->name }}" class="dropdown-item confirm-delete">
-                                        <i class="mdi mdi-trash-can-outline mr-2"></i>Delete
-                                    </button>
-                                @endcan
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5">No data available</td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="sm:flex items-center bg-white rounded shadow-sm px-6 py-4 mb-2">
+            No data available
+        </div>
+    @endforelse
+
+    <div class="bg-white rounded shadow-sm px-6 py-4">
         {{ $couriers->withQueryString()->links() }}
     </div>
 

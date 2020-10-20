@@ -64,6 +64,22 @@ class Order extends Model
      * Scope a query to only include orders of a given payment type.
      *
      * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithTotal(Builder $query)
+    {
+        return $query
+            ->select('orders.*')
+            ->selectRaw("(
+                SELECT SUM(price) AS price FROM order_details
+                WHERE order_details.order_id = orders.id
+            ) - order_discount + delivery_fee - delivery_discount AS total_price");
+    }
+
+    /**
+     * Scope a query to only include orders of a given payment type.
+     *
+     * @param Builder $query
      * @param string|array $type
      * @return Builder
      */

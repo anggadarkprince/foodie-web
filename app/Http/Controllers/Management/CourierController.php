@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\SaveCourierRequest;
 use App\Models\Courier;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -65,6 +66,7 @@ class CourierController extends Controller
             $uploadPath = 'couriers/' . date('Ym');
             $request->merge(['photo' => $photo->storePublicly($uploadPath, 'public')]);
             $request->merge(['password' => bcrypt($request->input('password'))]);
+            $request->merge(['date_of_birth' => Carbon::parse($request->input('date_of_birth'))->format('Y-m-d')]);
 
             $courier = Courier::create($request->input());
 
@@ -90,7 +92,9 @@ class CourierController extends Controller
      */
     public function show(Courier $courier)
     {
-        return view('courier.show', compact('courier'));
+        $lastDeliveries = $courier->orders()->withTotal()->latest()->take(5)->get();
+
+        return view('courier.show', compact('courier', 'lastDeliveries'));
     }
 
     /**
@@ -120,6 +124,7 @@ class CourierController extends Controller
             } else {
                 $request->merge(['password' => bcrypt($request->input('password'))]);
             }
+            $request->merge(['date_of_birth' => Carbon::parse($request->input('date_of_birth'))->format('Y-m-d')]);
 
             $photo = $request->file('photo');
             if (!empty($photo)) {
@@ -141,7 +146,7 @@ class CourierController extends Controller
         } catch (Throwable $e) {
             return redirect()->back()->withInput()->with([
                 "status" => "failed",
-                "message" => "Update courier failed"
+                "message" => $e->getMessage()
             ]);
         }
     }

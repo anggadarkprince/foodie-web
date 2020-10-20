@@ -21,7 +21,7 @@ class CreateCouriersTable extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->string('id_card')->nullable();
-            $table->string('date_of_birth')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('address')->nullable();
             $table->string('vehicle_type')->nullable();
             $table->string('vehicle_plat')->nullable();
