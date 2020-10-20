@@ -4,12 +4,12 @@
     <div class="bg-white rounded shadow px-6 py-4">
         <div class="flex justify-between items-center mb-3">
             <div>
-                <h1 class="text-xl">User Account</h1>
+                <h1 class="text-xl text-green-500">User Account</h1>
                 <span class="text-gray-400">Manage all user account</span>
             </div>
             <div>
                 <button class="button-blue button-sm modal-toggle" data-modal="#modal-filter">
-                    <i class="mdi mdi-filter-variant"></i>
+                    <i class="mdi mdi-tune-vertical-variant"></i>
                 </button>
                 <a href="{{ url()->full() }}&export=1" class="button-blue button-sm text-center">
                     <i class="mdi mdi-file-download-outline"></i>

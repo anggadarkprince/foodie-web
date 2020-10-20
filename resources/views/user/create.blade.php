@@ -5,7 +5,7 @@
         @csrf
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-2">
-                <h1 class="text-xl">Create User</h1>
+                <h1 class="text-xl text-green-500">Create User</h1>
                 <span class="text-gray-400">Manage all user account</span>
             </div>
             <div class="pt-2">
@@ -49,7 +49,7 @@
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-4">
-                <h1 class="text-xl">Avatar</h1>
+                <h1 class="text-xl text-green-500">Avatar</h1>
                 <span class="text-gray-400">Choose photo of user</span>
             </div>
             <div class="sm:flex items-center pb-3 input-file-wrapper">
@@ -70,7 +70,7 @@
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-2">
-                <h1 class="text-xl">Group Access</h1>
+                <h1 class="text-xl text-green-500">Group Access</h1>
                 <span class="text-gray-400">Choose what group user is owned</span>
             </div>
             <div class="pb-3">

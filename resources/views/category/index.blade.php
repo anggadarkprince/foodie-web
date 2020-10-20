@@ -31,7 +31,7 @@
                         <div class="h-10 w-10 inline-block mr-3 rounded-md">
                             <img class="object-cover h-10 w-10 rounded-md" src="{{ $category->icon }}" alt="{{ $category->category }}">
                         </div>
-                        <p class="text-lg">{{ $category->category }}</p>
+                        <p>{{ $category->category }}</p>
                     </div>
                 </div>
                 <div class="px-2 sm:w-1/3 hidden md:block">

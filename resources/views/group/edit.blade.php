@@ -6,7 +6,7 @@
         @method('put')
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-2">
-                <h1 class="text-xl">Create Group</h1>
+                <h1 class="text-xl text-green-500">Create Group</h1>
                 <span class="text-gray-400">Account group permission</span>
             </div>
             <div class="py-2 space-y-4">
@@ -26,7 +26,7 @@
         </div>
         <div class="bg-white rounded shadow-sm px-6 py-4 mb-4">
             <div class="mb-2">
-                <h1 class="text-xl">Permission Access</h1>
+                <h1 class="text-xl text-green-500">Permission Access</h1>
                 <span class="text-gray-400">Choose what permission the group can do</span>
             </div>
             <div>
@@ -34,7 +34,7 @@
                 @foreach($permissions as $moduleName => $modules)
                     <h1 class="text-lg mt-4 mb-2 text-green-500">{{ ucwords(preg_replace('/(_|\-)/', ' ', $moduleName)) }}</h1>
                     @foreach($modules as $featureName => $features)
-                        <h2 class="text-md pl-4 mb-1 text-green-400">{{ ucwords(preg_replace('/(_|\-)/', ' ', $featureName)) }}</h2>
+                        <h2 class="text-md pl-4 mb-1 text-gray-500">{{ ucwords(preg_replace('/(_|\-)/', ' ', $featureName)) }}</h2>
                         <div class="grid grid-cols-1 gap-4 pl-4 md:grid-cols-2 lg:grid-cols-4">
                             @foreach($features as $permission)
                                 <div class="mb-3">
